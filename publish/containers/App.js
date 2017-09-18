@@ -24,10 +24,6 @@ var _redux = require('redux');
 
 var _reactRedux = require('react-redux');
 
-var _reactBootstrap = require('react-bootstrap');
-
-var _reactRouterBootstrap = require('react-router-bootstrap');
-
 var _reactRouter = require('react-router');
 
 var _auth = require('../common/auth');
@@ -49,15 +45,6 @@ var App = function (_Component) {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, _Component.call(this, props));
 
-        _this.nav = {
-            "/account": { name: "账号管理" },
-            "/networkinfo": {
-                name: "人脉管理",
-                item: {
-                    "/networkinfo/list": { name: "人脉列表" }
-                }
-            }
-        };
         _this.state = {
             pathname: props.location.pathname
         };
@@ -75,46 +62,6 @@ var App = function (_Component) {
         }
     };
 
-    App.prototype.getdropdown = function getdropdown(lists) {
-        //遍历下拉菜单选项
-        var items = [];
-        for (var i in lists) {
-            items.push(_react2.default.createElement(
-                _reactRouterBootstrap.LinkContainer,
-                { key: i, to: { pathname: i } },
-                _react2.default.createElement(
-                    _reactBootstrap.NavItem,
-                    null,
-                    lists[i].name
-                )
-            ));
-        }
-        return items;
-    };
-
-    App.prototype.getNavItem = function getNavItem() {
-        var rows = [];
-        for (var i in this.nav) {
-            if (this.nav[i].item) {
-                rows.push(_react2.default.createElement(
-                    _reactBootstrap.NavDropdown,
-                    { className: this.state.pathname.startsWith(i) ? "active" : null, key: i, title: this.nav[i].name, id: 'checkDropdown' },
-                    this.getdropdown(this.nav[i].item)
-                ));
-            } else {
-                rows.push(_react2.default.createElement(
-                    _reactRouterBootstrap.LinkContainer,
-                    { key: i, to: { pathname: i } },
-                    _react2.default.createElement(
-                        _reactBootstrap.NavItem,
-                        null,
-                        this.nav[i].name
-                    )
-                ));
-            }
-        }
-        return rows;
-    };
     //退出登录
 
 
@@ -125,50 +72,195 @@ var App = function (_Component) {
 
     App.prototype.render = function render() {
         var user = (0, _auth.getMuser)();
+        var pathname = this.props.routes[1].name;
         return _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(
-                _reactBootstrap.Navbar,
-                { className: { 'hide': !user, 'nav-theme': true } },
+            user && _react2.default.createElement(
+                'div',
+                { className: 'wrapper fixed' },
                 _react2.default.createElement(
-                    _reactBootstrap.Navbar.Header,
-                    null,
+                    'header',
+                    { className: 'main-header' },
                     _react2.default.createElement(
-                        _reactBootstrap.Navbar.Brand,
-                        { className: 'font-25' },
-                        '\u540E\u53F0'
-                    )
-                ),
-                _react2.default.createElement(
-                    _reactBootstrap.Nav,
-                    { bsStyle: 'pills' },
-                    this.getNavItem()
-                ),
-                user && _react2.default.createElement(
-                    'div',
-                    { className: 'pull-right' },
-                    _react2.default.createElement('img', { src: user.headerImg ? user.headerImg.contentUri : '/dist/images/user.jpg', alt: '\u5934\u50CF', className: 'pull-left m-t10 radius-5', width: '30' }),
-                    _react2.default.createElement(
-                        _reactBootstrap.Nav,
-                        null,
+                        'a',
+                        { href: '/', className: 'logo' },
                         _react2.default.createElement(
-                            _reactBootstrap.NavDropdown,
-                            { eventKey: '0', title: user ? user.name : "无", id: 'admin' },
+                            'span',
+                            { className: 'logo-mini' },
+                            'yoga'
+                        ),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'logo-lg' },
                             _react2.default.createElement(
-                                _reactBootstrap.MenuItem,
-                                { onClick: this.props.logout },
-                                '\u9000\u51FA'
+                                'b',
+                                null,
+                                'yoga'
+                            ),
+                            'manage'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'nav',
+                        { className: 'navbar navbar-static-top', role: 'navigation' },
+                        _react2.default.createElement('a', { href: '#', className: 'sidebar-toggle', 'data-toggle': 'push-menu', role: 'button' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'navbar-custom-menu' },
+                            _react2.default.createElement(
+                                'ul',
+                                { className: 'nav navbar-nav' },
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement('img', { src: user.headerImg ? user.headerImg.contentUri : '/dist/images/user.jpg',
+                                        alt: '\u5934\u50CF', width: 30, className: 'img-circle m-t10' })
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: '/' },
+                                        user ? user.name : "无"
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: '#', onClick: this.props.logout },
+                                        '\u9000\u51FA'
+                                    )
+                                )
                             )
                         )
                     )
+                ),
+                _react2.default.createElement(
+                    'aside',
+                    { className: 'main-sidebar' },
+                    _react2.default.createElement(
+                        'section',
+                        { className: 'sidebar' },
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'sidebar-menu tree', 'data-widget': 'tree' },
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'dashboard' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/dashboard' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'dashboard'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'routines' || pathname == 'routinesedit' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/routines' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'routines'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'workouts' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/workouts' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'workouts'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'challenges' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/challenges' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'challenges'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'users' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/users' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'users'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: pathname == 'milestones' ? "active" : "" },
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: '/milestones' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        'milestones'
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'content-wrapper', style: { minHeight: '667px', padding: '60px 15px 15px 15px' } },
+                    this.props.children
+                ),
+                _react2.default.createElement(
+                    'footer',
+                    { className: 'main-footer' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'pull-right hidden-xs' },
+                        _react2.default.createElement(
+                            'b',
+                            null,
+                            'Version'
+                        ),
+                        ' 1.0.0'
+                    ),
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        'Copyright \xA9 2017 ',
+                        _react2.default.createElement(
+                            'a',
+                            { href: '/' },
+                            'yoga manage'
+                        ),
+                        '.'
+                    )
                 )
             ),
-            _react2.default.createElement(
-                'div',
-                { className: 'container m-t80' },
-                this.props.children
-            )
+            !user && this.props.children
         );
     };
 

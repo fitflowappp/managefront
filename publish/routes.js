@@ -18,13 +18,53 @@ var _Login = require('./containers/Login');
 
 var _Login2 = _interopRequireDefault(_Login);
 
+var _Register = require('./containers/Register');
+
+var _Register2 = _interopRequireDefault(_Register);
+
 var _Account = require('./containers/Account');
 
 var _Account2 = _interopRequireDefault(_Account);
 
-var _Networkinfo = require('./containers/Networkinfo');
+var _Dashboard = require('./containers/Dashboard');
 
-var _Networkinfo2 = _interopRequireDefault(_Networkinfo);
+var _Dashboard2 = _interopRequireDefault(_Dashboard);
+
+var _Routines = require('./containers/Routines');
+
+var _Routines2 = _interopRequireDefault(_Routines);
+
+var _RoutinesEdit = require('./containers/RoutinesEdit');
+
+var _RoutinesEdit2 = _interopRequireDefault(_RoutinesEdit);
+
+var _Workouts = require('./containers/Workouts');
+
+var _Workouts2 = _interopRequireDefault(_Workouts);
+
+var _WorkoutsEdit = require('./containers/WorkoutsEdit');
+
+var _WorkoutsEdit2 = _interopRequireDefault(_WorkoutsEdit);
+
+var _Challenges = require('./containers/Challenges');
+
+var _Challenges2 = _interopRequireDefault(_Challenges);
+
+var _ChallengesEdit = require('./containers/ChallengesEdit');
+
+var _ChallengesEdit2 = _interopRequireDefault(_ChallengesEdit);
+
+var _ChallengesOrders = require('./containers/ChallengesOrders');
+
+var _ChallengesOrders2 = _interopRequireDefault(_ChallengesOrders);
+
+var _ChallengesOrdersEdit = require('./containers/ChallengesOrdersEdit');
+
+var _ChallengesOrdersEdit2 = _interopRequireDefault(_ChallengesOrdersEdit);
+
+var _Milestones = require('./containers/Milestones');
+
+var _Milestones2 = _interopRequireDefault(_Milestones);
 
 var _auth = require('./common/auth');
 
@@ -44,7 +84,7 @@ function requireAuth(nextState, replace) {
 function logined(nextState, replace) {
     if ((0, _auth.getMuser)()) {
         replace({
-            pathname: '/account',
+            pathname: '/dashboard',
             state: { nextPathname: nextState.location.pathname }
         });
     }
@@ -59,13 +99,18 @@ var routes = _react2.default.createElement(
     { path: '/', component: _App2.default },
     _react2.default.createElement(_reactRouter.IndexRedirect, { to: 'login' }),
     _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default, name: '\u767B\u5F55', onEnter: logined }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _Register2.default, name: 'Register' }),
     _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _Account2.default, name: '\u8D26\u53F7\u7BA1\u7406', onEnter: requireAuth }),
-    _react2.default.createElement(
-        _reactRouter.Route,
-        { path: 'networkinfo', onEnter: requireAuth },
-        _react2.default.createElement(_reactRouter.Route, { path: 'list', component: _Networkinfo2.default })
-    )
+    _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: _Dashboard2.default, name: 'dashboard', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'routines', component: _Routines2.default, name: 'routines', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'routinesedit/:id', component: _RoutinesEdit2.default, name: 'routines', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'workouts', component: _Workouts2.default, name: 'workouts', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'workoutsedit/:id', component: _WorkoutsEdit2.default, name: 'workouts', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'challenges', component: _Challenges2.default, name: 'challenges', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'challengesedit/:id', component: _ChallengesEdit2.default, name: 'challenges', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'challengesorders', component: _ChallengesOrders2.default, name: 'challenges', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'challengesordersedit/:id', component: _ChallengesOrdersEdit2.default, name: 'challenges', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'milestones', component: _Milestones2.default, name: 'milestones', onEnter: requireAuth })
 );
 exports.default = routes;
-// export default routeLists;
 //# sourceMappingURL=routes.js.map

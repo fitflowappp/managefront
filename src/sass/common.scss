@@ -1,6 +1,7 @@
 body {
   font-family: ff-tisa-web-pro-1, ff-tisa-web-pro-2, 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f9fbff;
+  background-color: #ecf0f5;
+  word-break: break-all;
 }
 @font-face {
   font-family: 'mht';
@@ -34,6 +35,13 @@ $margin: 100;
 }
 .m-5{
   margin:5px;
+}
+label{
+  font-weight: normal;
+}
+input[type="range"]{
+  border:0;
+  outline:none;
 }
 .pointer {
   cursor: pointer;
@@ -86,17 +94,9 @@ a:hover, a:visited {
 .modal-dialog .input-group{
   margin: 5px 0px;
 }
+//header
+.header{
+  height: 60px;
+  line-height: 60px;
+}
 //nav
-.nav-theme.navbar-default{
-  width: 100%;
-  left: 0px;
-  top: 0px;
-  z-index: 99;
-  position: fixed;
-  background-color: #fff;
-}
-.nav-theme .navbar-nav > .active > a, .nav-theme .navbar-nav > .active > a:hover, .nav-theme .navbar-nav > .active > a:focus{
-  background-color: #337ab7;
-  color: #fff;
-  border-radius: 0;
-}

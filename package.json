@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "admin-lte": "^2.3.11",
     "agentkeepalive": "^2.2.0",
     "axios": "^0.11.0",
     "babel-plugin-transform-class-properties": "^6.9.0",
@@ -69,6 +70,7 @@
     "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
+    "react-admin-lte": "0.0.38",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.9.1"

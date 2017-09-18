@@ -1,6 +1,7 @@
 /* line 1, ../../sass/common.scss */
 body {
   font-family: ff-tisa-web-pro-1, ff-tisa-web-pro-2, 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f9fbff;
 }
 
 @font-face {

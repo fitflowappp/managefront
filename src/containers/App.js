@@ -4,103 +4,107 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {Navbar,Nav, NavItem,NavDropdown,MenuItem} from 'react-bootstrap'
-import {LinkContainer} from 'react-router-bootstrap'
-import {withRouter,browserHistory} from "react-router";
-import {getMuser,logout} from "../common/auth";
+import {withRouter, browserHistory} from "react-router";
+import {getMuser, logout} from "../common/auth";
 import cookie from 'react-cookie'
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.nav = {
-            "/account": {name: "账号管理"},
-            "/networkinfo":{
-                name: "人脉管理",
-                item: {
-                    "/networkinfo/list": {name: "人脉列表"},
-                }
-            }
-        };
-        this.state={
-            pathname:props.location.pathname,
+        this.state = {
+            pathname: props.location.pathname,
         }
     }
+
     componentDidMount() {
 
     }
+
     componentWillReceiveProps(nextProps) {
         var pathname = nextProps.location.pathname;
         if (this.state.pathname != pathname) {
             this.setState({
-                pathname:pathname
+                pathname: pathname
             })
         }
     }
-    getdropdown(lists){//遍历下拉菜单选项
-        var items=[];
-        for (const i in lists) {
-            items.push(
-                <LinkContainer key={i} to={{ pathname: i}}>
-                    <NavItem>{lists[i].name}</NavItem>
-                </LinkContainer>
-            );
-        }
-        return items;
-    }
-    
-    getNavItem(){
-        var rows = [];
-        for (const i in this.nav) {
-            if(this.nav[i].item){
-                rows.push(
-                    <NavDropdown  className={this.state.pathname.startsWith(i)?"active":null} key={i} title={this.nav[i].name} id="checkDropdown">
-                        {this.getdropdown(this.nav[i].item)}
-                    </NavDropdown>
-                );
-            }
-            else{
-            rows.push(
-                <LinkContainer key={i} to={{ pathname: i }}>
-                    <NavItem>{this.nav[i].name}</NavItem>
-                </LinkContainer>
-            );
-            }
-        }
-        return rows;
-    }
-    //退出登录
-     logout(){ 
-         cookie.remove("muser");
-         browserHistory.push('/');
-     }
-    render() {
-        const user=getMuser();
-        return (
-            <div>
-                <Navbar className={{'hide':!user,'nav-theme':true}} >
-                    <Navbar.Header>
-                        <Navbar.Brand className="font-25">
-                            后台
-                        </Navbar.Brand>
-                    </Navbar.Header>
-                    <Nav bsStyle="pills" >
-                        {this.getNavItem()}
-                    </Nav>
-                    {user&&
-                    <div className="pull-right">
-                        <img src={user.headerImg?user.headerImg.contentUri:'/dist/images/user.jpg'} alt="头像" className="pull-left m-t10 radius-5" width="30"/>
-                        <Nav>
-                            <NavDropdown eventKey="0" title={user?user.name:"无"} id="admin">
-                                <MenuItem onClick={this.props.logout}>退出</MenuItem>
-                            </NavDropdown>
-                        </Nav>
-                    </div>}
-                </Navbar>
 
-                <div className="container m-t80">
-                    {this.props.children}
-                </div>
-            </div>
+    //退出登录
+    logout() {
+        cookie.remove("muser");
+        browserHistory.push('/');
+    }
+
+    render() {
+        const user = getMuser();
+        const pathname=this.props.routes[1].name;
+        return (
+           <div>
+               {user&&<div className="wrapper fixed">
+                   <header className="main-header">
+                       <a href="/" className="logo">
+                           <span className="logo-mini">yoga</span>
+                           <span className="logo-lg"><b>yoga</b>manage</span>
+                       </a>
+                       <nav className="navbar navbar-static-top" role="navigation">
+                           <a href="#" className="sidebar-toggle" data-toggle="push-menu" role="button"></a>
+                           <div className="navbar-custom-menu">
+                               <ul className="nav navbar-nav">
+                                   <li><img src={user.headerImg ? user.headerImg.contentUri : '/dist/images/user.jpg'}
+                                            alt="头像" width={30} className="img-circle m-t10"/></li>
+                                   <li><a href="/">{user ? user.name : "无"}</a></li>
+                                   <li><a href="#" onClick={this.props.logout}>退出</a></li>
+                               </ul>
+                           </div>
+                       </nav>
+                   </header>
+                   <aside className="main-sidebar">
+                       <section className="sidebar">
+                           <ul className="sidebar-menu tree" data-widget="tree">
+                               <li className={pathname=='dashboard'?"active":""}>
+                                   <a href="/dashboard">
+                                       <span>dashboard</span>
+                                   </a>
+                               </li>
+                               <li className={(pathname=='routines'||pathname=='routinesedit')?"active":""}>
+                                   <a href="/routines">
+                                       <span>routines</span>
+                                   </a>
+                               </li>
+                               <li className={pathname=='workouts'?"active":""}>
+                                   <a href="/workouts">
+                                       <span>workouts</span>
+                                   </a>
+                               </li>
+                               <li className={pathname=='challenges'?"active":""}>
+                                   <a href="/challenges">
+                                       <span>challenges</span>
+                                   </a>
+                               </li>
+                               <li className={pathname=='users'?"active":""}>
+                                   <a href="/users">
+                                       <span>users</span>
+                                   </a>
+                               </li>
+                               <li className={pathname=='milestones'?"active":""}>
+                                   <a href="/milestones">
+                                       <span>milestones</span>
+                                   </a>
+                               </li>
+                           </ul>
+                       </section>
+                   </aside>
+                   <div className="content-wrapper" style={{minHeight: '667px', padding: '60px 15px 15px 15px'}}>
+                       {this.props.children}
+                   </div>
+                   <footer className="main-footer">
+                       <div className="pull-right hidden-xs"><b>Version</b> 1.0.0</div>
+                       <strong>Copyright © 2017 <a href="/">yoga manage</a>.</strong>
+                   </footer>
+               </div>}
+               {!user&&
+               this.props.children
+               }
+           </div>
         )
     }
 }

@@ -31,6 +31,8 @@ exports.linkState = linkState;
 exports.isEqual = isEqual;
 exports.getTime = getTime;
 exports.scrollTop = scrollTop;
+exports.isObject = isObject;
+exports.isArray = isArray;
 
 var _react = require('react');
 
@@ -399,18 +401,64 @@ function serializeForm(form) {
     }
     return q;
 }
-function linkState(component, key) {
-    var cache = component.__linkStateHandlers || (component.__linkStateHandlers = {});
 
-    return cache[key] || (cache[key] = createHandler(component, key));
-}
-function createHandler(component, key) {
+/**
+ * 数据双向绑定
+ * 例子: containers/TwoWayBindTest
+ * two way bind data
+ */
+function createHandler(component, key, path) {
     return function (e) {
         var el = e.target;
         var value = el.type === 'checkbox' ? el.checked : el.value;
-        component.setState((0, _defineProperty3.default)({}, key, value));
+        component.setState((0, _defineProperty3.default)({}, key, path ? component.state[key].setIn(path, value) : value));
     };
 }
+
+function _linkState(component, key, path) {
+    var cache = component.__linkStateHandlers || (component.__linkStateHandlers = {});
+    var cacheKey = path ? key + ':' + path.toString() : key;
+
+    return cache[cacheKey] || (cache[cacheKey] = createHandler(component, key, path));
+}
+
+function linkStateE(context, key) {
+    return function (_path) {
+
+        var path = [];
+        if (isArray(_path)) {
+            path = _path;
+        } else {
+            path.push(_path);
+        }
+        if (key) {
+            return _linkState(context, key, path);
+        } else {
+            return _linkState(context, _path);
+        }
+    };
+}
+
+function linkStateV(context, key) {
+    return function (_path) {
+        var path = [];
+        if (isArray(_path)) {
+            path = _path;
+        } else {
+            path.push(_path);
+        }
+        if (key) {
+            return context.state[key] ? context.state[key].getIn(path) : undefined;
+        } else {
+            return context.state[_path] ? context.state[_path] : undefined;
+        }
+    };
+}
+
+function linkState(context, key) {
+    return { get: linkStateV(context, key), set: linkStateE(context, key) };
+}
+
 function isEqual(a, b) {
     var aProps = (0, _getOwnPropertyNames2.default)(a);
     var bProps = (0, _getOwnPropertyNames2.default)(b);
@@ -443,5 +491,22 @@ function getTime(time) {
 // 回到顶部
 function scrollTop() {
     document.documentElement.scrollTop = document.body.scrollTop = 0;
+}
+
+/**
+ * 检测Object类型
+ * @param obj
+ * @returns {boolean}
+ */
+function isObject(obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]';
+}
+/**
+ * 检测Array类型
+ * @param arr
+ * @returns {boolean}
+ */
+function isArray(arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]';
 }
 //# sourceMappingURL=index.js.map

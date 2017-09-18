@@ -66,8 +66,8 @@ var Login = function (_Component) {
         var that = this;
         login(param, function (obj) {
             if (obj.result.code == 1) {
-                _reactCookie2.default.save("muser", obj, { "path": '/' });
-                that.props.router.replace({ pathname: '/account' });
+                _reactCookie2.default.save("muser", obj.content, { "path": '/' });
+                that.props.router.replace({ pathname: '/dashboard' });
             } else {
                 _Alert2.default.info({ info: obj.result.msg });
             }
@@ -78,57 +78,55 @@ var Login = function (_Component) {
         return _react2.default.createElement(
             _reactBootstrap.Row,
             { className: { "show-grid": true, "hide": (0, _auth.getMuser)() } },
+            _react2.default.createElement(_reactHelmet2.default, { title: 'Login' }),
             _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 12, mdOffset: 4, md: 4 },
+                'div',
+                null,
                 _react2.default.createElement(
                     'div',
-                    null,
-                    _react2.default.createElement(_reactHelmet2.default, { title: 'Login' }),
+                    { className: 'login-box' },
                     _react2.default.createElement(
-                        _reactBootstrap.Panel,
-                        { header: '\u540E\u53F0\u7BA1\u7406\u767B\u5F55', bsStyle: 'primary', className: 'm-t60' },
+                        'div',
+                        { className: 'login-logo' },
+                        _react2.default.createElement(
+                            'b',
+                            null,
+                            'yoga manage'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'login-box-body' },
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'login-box-msg' },
+                            'Sign in to start your session'
+                        ),
                         _react2.default.createElement(
                             _reactBootstrap.Form,
-                            { horizontal: true, onSubmit: this.login.bind(this) },
+                            { role: 'form', onSubmit: this.login.bind(this) },
                             _react2.default.createElement(
-                                _reactBootstrap.FormGroup,
-                                { controlId: 'formHorizontalEmail' },
-                                _react2.default.createElement(
-                                    _reactBootstrap.Col,
-                                    { sm: 2, className: 'text-center text-info' },
-                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', className: 'm-t10' })
-                                ),
-                                _react2.default.createElement(
-                                    _reactBootstrap.Col,
-                                    { sm: 10 },
-                                    _react2.default.createElement(_reactBootstrap.FormControl, { required: true, type: 'text', name: 'name', placeholder: 'Name' })
-                                )
+                                'div',
+                                { className: 'form-group has-feedback' },
+                                _react2.default.createElement('input', { type: 'text', className: 'form-control', required: true, name: 'name', placeholder: 'Username' }),
+                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user form-control-feedback' })
                             ),
                             _react2.default.createElement(
-                                _reactBootstrap.FormGroup,
-                                { controlId: 'formHorizontalPassword' },
-                                _react2.default.createElement(
-                                    _reactBootstrap.Col,
-                                    { sm: 2, className: 'text-center text-info' },
-                                    _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'lock', className: 'm-t10' })
-                                ),
-                                _react2.default.createElement(
-                                    _reactBootstrap.Col,
-                                    { sm: 10 },
-                                    _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', name: 'password', placeholder: 'Password' })
-                                )
+                                'div',
+                                { className: 'form-group has-feedback' },
+                                _react2.default.createElement('input', { type: 'password', className: 'form-control', required: true, name: 'password', placeholder: 'Password' }),
+                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock form-control-feedback' })
                             ),
                             _react2.default.createElement(
-                                _reactBootstrap.FormGroup,
-                                null,
+                                'div',
+                                { className: 'row' },
                                 _react2.default.createElement(
-                                    _reactBootstrap.Col,
-                                    { smOffset: 2, sm: 10 },
+                                    'div',
+                                    { className: 'col-xs-4 col-md-offset-8' },
                                     _react2.default.createElement(
-                                        _reactBootstrap.Button,
-                                        { type: 'submit' },
-                                        '\u767B\u5F55'
+                                        'button',
+                                        { type: 'submit', className: 'btn btn-primary btn-block btn-flat' },
+                                        'Sign In'
                                     )
                                 )
                             )

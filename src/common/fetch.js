@@ -210,7 +210,7 @@ export function upload(e, progressCb) {
     };
 
     var promise = fetchSetAfterMethod(
-        fetch().post('/api/upload', data, config)
+        fetch().post('/api/manage/upload', data, config)
             .then(function (response) {
                 return response;
             }).catch(function (response) {

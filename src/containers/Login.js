@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes} from 'react'
 import {bindActionCreators} from 'redux'
-import {withRouter} from "react-router";
+import {Link, withRouter} from "react-router";
 import {connect} from 'react-redux'
 import {accountActions} from '../actions'
 import Helmet from "react-helmet"
@@ -24,8 +24,8 @@ class Login extends Component{
         const that=this;
         login(param,function (obj) {
             if (obj.result.code == 1) {
-                cookie.save("muser", obj, {"path": '/'});
-                that.props.router.replace({pathname: '/account'});
+                cookie.save("muser", obj.content, {"path": '/'});
+                that.props.router.replace({pathname: '/dashboard'});
             }
             else {
                 Alert.info({info: obj.result.msg});
@@ -36,40 +36,37 @@ class Login extends Component{
     render() {
         return (
             <Row className={{"show-grid":true,"hide":getMuser()}}>
-                <Col xs={12} mdOffset={4} md={4}>
+                <Helmet title="Login"/>
                     <div>
-                        <Helmet title="Login"/>
-                        <Panel header="后台管理登录" bsStyle="primary" className="m-t60">
-                            <Form horizontal onSubmit = {this.login.bind(this)}>
-                                <FormGroup controlId="formHorizontalEmail">
-                                    <Col  sm={2} className="text-center text-info">
-                                        <Glyphicon glyph="user" className="m-t10"/>
-                                    </Col>
-                                    <Col sm={10}>
-                                        <FormControl required={true}  type="text" name="name" placeholder="Name"/>
-                                    </Col>
-                                </FormGroup>
-
-                                <FormGroup controlId="formHorizontalPassword">
-                                    <Col sm={2} className="text-center text-info">
-                                        <Glyphicon glyph="lock" className="m-t10"/>
-                                    </Col>
-                                    <Col sm={10}>
-                                        <FormControl type="password" name="password" placeholder="Password" />
-                                    </Col>
-                                </FormGroup>
-
-                                <FormGroup>
-                                    <Col smOffset={2} sm={10}>
-                                        <Button type="submit">
-                                            登录
-                                        </Button>
-                                    </Col>
-                                </FormGroup>
-                            </Form>
-                        </Panel>
+                        <div className="login-box">
+                            <div className="login-logo">
+                                <b>yoga manage</b>
+                            </div>
+                            <div className="login-box-body">
+                                <p className="login-box-msg">Sign in to start your session</p>
+                                <Form role="form"  onSubmit = {this.login.bind(this)}>
+                                    <div className="form-group has-feedback">
+                                        <input type="text" className="form-control" required={true}   name="name" placeholder="Username"/>
+                                        <span className="glyphicon glyphicon-user form-control-feedback"></span>
+                                    </div>
+                                    <div className="form-group has-feedback">
+                                        <input type="password" className="form-control" required={true}   name="password" placeholder="Password"/>
+                                        <span className="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    </div>
+                                    <div className="row">
+                                        {/*<div className="col-xs-4">
+                                            <Link to='/register'>
+                                               <button type="submit" className="btn btn-default btn-block btn-flat">register</button>
+                                            </Link>
+                                        </div>*/}
+                                        <div className="col-xs-4 col-md-offset-8">
+                                            <button type="submit" className="btn btn-primary btn-block btn-flat">Sign In</button>
+                                        </div>
+                                    </div>
+                                </Form>
+                            </div>
+                        </div>
                     </div>
-                </Col>
             </Row>
         )
     }

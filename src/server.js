@@ -67,12 +67,12 @@ apiProxy.on('error', (error, req, res) => {
 
 server.all("/api/*", function (req, res) {
     var url = req.url;
-    url = url.replace("/api/", "/bbs/manage/");
+    url = url.replace("/api/", "/");
     req.url = url;
     apiProxy.web(req, res);
     // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });
-server.all("/bbs/*", function (req, res) {
+/*server.all("/bbs/!*", function (req, res) {
     // var url = req.url;
     // url = url.replace("/bbs/", "/bbs/");
     // req.url = url;
@@ -80,13 +80,13 @@ server.all("/bbs/*", function (req, res) {
     // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });
 
-server.all("/front/*", function (req, res) {
+server.all("/front/!*", function (req, res) {
     var url = req.url;
     url = url.replace("/front/", "/bbs/");
     req.url = url;
     apiProxy.web(req, res);
     // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
-});
+});*/
 server.all("/public/view/*", function (req, res) {
     // var url = req.url;
     // url = url.replace("/view/", "/view/");
@@ -190,13 +190,18 @@ function renderFullPage(html, head, initialState) {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       ${head.title.toString()}
         <link href="/dist/stylesheets/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="/dist/stylesheets/datatables.css" rel="stylesheet" type="text/css" />
+        <link href="/dist/stylesheets/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="/dist/stylesheets/_all-skins.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link href="/dist/stylesheets/app.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="/dist/favicon.ico">
         <!--[if IE]>
             <link href="/dist/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <![endif]-->
     </head>
-    <body>
+    <body class='sidebar-mini skin-blue'>
       <div id="root">
         <div>
           ${html}
@@ -206,6 +211,9 @@ function renderFullPage(html, head, initialState) {
         window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
       </script>
       <script src="/dist/bundle.js"></script>
+      <script src="/dist/jquery.js"></script>
+      <script src="/dist/bootstrap.js"></script>
+       <script src="/dist/adminlte.js"></script>
     </body>
     </html>
   `;

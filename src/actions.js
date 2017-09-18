@@ -10,10 +10,10 @@ function resource(name, url, keys = [], option = {}) {
     reducerObject[name.toLowerCase()] = reducerFactory(name, reducerOption);
     exports[name.toLowerCase() + "Actions"] = {... actionFactory(name, url, keys, actionOption)};
 }
-resource("Account", '/api/admin/:id', [],
+resource("Account", '/api/user', [],
     {
         actions: [
-            ["login", "post", "/api/admin/login/me", "result"],
+            ["login", "post", "/api/manage/admin/login", "result"],
         ],
         reducers: {
             // TEST_ADD_ACTIONS: function (state, action) {
@@ -34,11 +34,28 @@ resource("User", '/api/user/:userId', [],
 
         ]
     });
-resource("Networkinfo", '/api/wechataddress', [],
+resource("Routines", '/api/manage/yoga/routine/:id', [],
     {
         actions: [
-            ["industry", "get", "/api/wechataddress/open/industry", 'industrys'],
-            ['province', "get", "/bbs/user/open/province", "provinces"],
+
+        ],
+    });
+resource("Workouts", '/api/manage/yoga/workout/:id', [],
+    {
+        actions: [
+
+        ],
+    });
+resource("Challenges", '/api/manage/yoga/challenge/:id', [],
+    {
+        actions: [
+
+        ],
+    });
+resource("ChallengeOrders", '/api/manage/yoga/challengeset/:id', [],
+    {
+        actions: [
+
         ],
     });
 exports.reducers = reducerObject;
