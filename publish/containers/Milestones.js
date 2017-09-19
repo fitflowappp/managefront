@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _assign = require('babel-runtime/core-js/object/assign');
-
-var _assign2 = _interopRequireDefault(_assign);
-
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -38,16 +34,15 @@ var _reactBootstrap = require('react-bootstrap');
 
 var _actions = require('../actions');
 
-var _AccountModal = require('../components/modal/AccountModal');
-
-var _AccountModal2 = _interopRequireDefault(_AccountModal);
-
 var _Alert = require('../components/Alert');
 
 var _Alert2 = _interopRequireDefault(_Alert);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Created by qwr on 2017/9/13.
+ */
 var Milestones = function (_Component) {
     (0, _inherits3.default)(Milestones, _Component);
 
@@ -57,88 +52,83 @@ var Milestones = function (_Component) {
         var _this = (0, _possibleConstructorReturn3.default)(this, _Component.call(this, props));
 
         _this.state = {
-            activePage: 1,
-            editAccount: null,
-            exerciseRange: 50,
-            workoutsRange: 0
+            milestone: {
+                achievementMinutes: 0,
+                achievementMinutesContent: "",
+
+                achievementWorkoutNum: 0,
+                achievementWorkoutContent: ""
+            },
+            success: false
         };
         return _this;
     }
 
     Milestones.prototype.componentDidMount = function componentDidMount() {
-        var role = this.state.role;
-        this.query(role);
+        this.query();
     };
 
-    Milestones.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
-        if (this.state.role != prevState.role) {
-            this.query();
-        }
-    };
+    Milestones.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {};
 
     Milestones.prototype.query = function query() {
-        var queryAccount = this.props.queryAccount;
+        var getMileStones = this.props.getMileStones;
 
-        var role = this.state.role;
-        queryAccount({ "role": role });
-    };
-
-    Milestones.prototype.add = function add() {
-        this.setState({
-            editAccount: null
-        });
-        this.refs['AccountModal'].getWrappedInstance().openModal();
-    };
-
-    Milestones.prototype.edit = function edit(account) {
-        this.setState({
-            editAccount: (0, _assign2.default)({}, account)
-        });
-        this.refs['AccountModal'].getWrappedInstance().openModal();
-    };
-
-    Milestones.prototype.del = function del(account) {
         var that = this;
-        _Alert2.default.confirm({
-            title: '删除', body: "确定删除？", surecb: function surecb() {
-                var deleteAccount = that.props.deleteAccount;
-
-                deleteAccount(account, function (res) {});
+        getMileStones({}, function (res) {
+            if (!res.content.achievementMinutesContent) {
+                res.content.achievementMinutesContent = '';
             }
+            if (!res.content.achievementWorkoutContent) {
+                res.content.achievementWorkoutContent = '';
+            }
+            that.setState({
+                milestone: res.content
+            });
+        });
+    };
+
+    Milestones.prototype.save = function save(event) {
+        event.preventDefault();
+        var putMileStones = this.props.putMileStones;
+
+        var that = this;
+        putMileStones(this.state.milestone, function (res) {
+            if (res.result.code == 1) {
+                that.setState({
+                    success: true
+                });
+            }
+            _Alert2.default.info({ info: res.result.msg });
         });
     };
 
     Milestones.prototype.set = function set(e) {
         var name = e.target.getAttribute('name');
         var value = e.target.value;
-        var state = this.state;
-        state[name] = value;
-        this.setState(state);
+        var milestone = this.state.milestone;
+        milestone[name] = value;
+        this.setState(milestone);
     };
-
-    Milestones.prototype.changeRole = function changeRole(role) {
-        this.setState({
-            role: role
-        });
-    };
-
-    Milestones.prototype.handleSelect = function handleSelect() {};
 
     Milestones.prototype.back = function back() {
         window.history.go(-1);
     };
 
     Milestones.prototype.render = function render() {
-        var accounts = this.props.account.list || [];
-        var role = this.state.role;
+        var milestone = this.state.milestone;
+        var success = this.state.success;
         return _react2.default.createElement(
             'div',
             null,
             _react2.default.createElement(_reactHelmet2.default, { title: 'Milestones' }),
-            _react2.default.createElement(_AccountModal2.default, { ref: 'AccountModal', query: this.query.bind(this), role: role, editAccount: this.state.editAccount }),
             _react2.default.createElement(
                 'div',
                 { className: 'box' },
+                success && _react2.default.createElement(
+                    'div',
+                    { className: 'callout callout-success text-center' },
+                    'Your changes have been succesfully saved'
+                ),
                 _react2.default.createElement(
                     'div',
                     { className: 'box-header' },
@@ -149,103 +139,153 @@ var Milestones = function (_Component) {
                     )
                 ),
                 _react2.default.createElement(
-                    'div',
-                    { className: 'box-body' },
+                    _reactBootstrap.Form,
+                    { role: 'form', onSubmit: this.save.bind(this) },
                     _react2.default.createElement(
-                        'p',
-                        null,
-                        'Users will receive an achievement after every how many total exercise minutes?'
-                    ),
-                    _react2.default.createElement(
-                        _reactBootstrap.Row,
-                        { style: { width: '600px' } },
+                        'div',
+                        { className: 'box-body' },
                         _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 2 },
-                            _react2.default.createElement(
-                                'text',
-                                null,
-                                '30'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 8 },
-                            _react2.default.createElement('input', { type: 'range', min: '30', max: '300', name: 'exerciseRange', className: 'pull-left', value: this.state.exerciseRange, step: 1, onChange: this.set.bind(this) })
-                        ),
-                        _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 2 },
-                            _react2.default.createElement(
-                                'text',
-                                null,
-                                '300'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 12 },
+                            _reactBootstrap.Panel,
+                            { style: { maxWidth: '600px' } },
                             _react2.default.createElement(
                                 'p',
-                                { className: 'text-center text-primary' },
-                                this.state.exerciseRange
+                                null,
+                                'Exercise Minutes'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Users will receive an achievement after every how many total exercise minutes?'
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.Row,
+                                { style: { maxWidth: '600px' } },
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 2, className: 'm-t5' },
+                                    _react2.default.createElement(
+                                        'text',
+                                        null,
+                                        '30'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 8, className: 'm-t5' },
+                                    _react2.default.createElement('input', { type: 'range', min: '30', max: '300', name: 'achievementMinutes', className: 'pull-left', value: milestone.achievementMinutes, step: 1, onChange: this.set.bind(this) })
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 2, className: 'm-t5' },
+                                    _react2.default.createElement(
+                                        'text',
+                                        null,
+                                        '300'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12 },
+                                    _react2.default.createElement(
+                                        'p',
+                                        { className: 'text-center text-primary' },
+                                        milestone.achievementMinutes
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12, className: 'm-t5' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { className: 'm-t5' },
+                                        'Pop-up box message for exercise minutes milestone:'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12, className: 'm-t5' },
+                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', style: { maxWidth: '615px' }, required: true, placeholder: '', name: 'achievementMinutesContent', value: milestone.achievementMinutesContent, onChange: this.set.bind(this) })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Panel,
+                            { style: { maxWidth: '600px' }, className: 'm-t40' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Total Workouts'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Users will receive an achievement after every how many total workouts?'
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.Row,
+                                { style: { maxWidth: '600px' } },
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 2 },
+                                    _react2.default.createElement(
+                                        'text',
+                                        null,
+                                        '1'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 8 },
+                                    _react2.default.createElement('input', { type: 'range', min: '1', max: '20', name: 'achievementWorkoutNum', className: 'pull-left', value: milestone.achievementWorkoutNum, step: 1, onChange: this.set.bind(this) })
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 2 },
+                                    _react2.default.createElement(
+                                        'text',
+                                        null,
+                                        '20'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12 },
+                                    _react2.default.createElement(
+                                        'p',
+                                        { className: 'text-center text-primary' },
+                                        milestone.achievementWorkoutNum
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12, className: 'm-t5' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { className: 'm-t5' },
+                                        'Pop-up box message for total wokrouts milestone:'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 12, className: 'm-t5' },
+                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', style: { maxWidth: '615px' }, required: true, placeholder: '', name: 'achievementWorkoutContent', value: milestone.achievementWorkoutContent, onChange: this.set.bind(this) })
+                                )
                             )
                         )
                     ),
                     _react2.default.createElement(
-                        'p',
-                        { className: 'm-t40' },
-                        'Users will receive an achievement after every how many total workouts?'
-                    ),
-                    _react2.default.createElement(
-                        _reactBootstrap.Row,
-                        { style: { width: '600px' } },
+                        'div',
+                        { className: 'box-footer clearfix' },
                         _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 2 },
-                            _react2.default.createElement(
-                                'text',
-                                null,
-                                '1'
-                            )
+                            'button',
+                            { type: 'submit', className: 'btn  btn-primary' },
+                            'Save'
                         ),
                         _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 8 },
-                            _react2.default.createElement('input', { type: 'range', min: '1', max: '20', name: 'workoutsRange', className: 'pull-left', value: this.state.workoutsRange, step: 1, onChange: this.set.bind(this) })
-                        ),
-                        _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 2 },
-                            _react2.default.createElement(
-                                'text',
-                                null,
-                                '20'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _reactBootstrap.Col,
-                            { sm: 12 },
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'text-center text-primary' },
-                                this.state.workoutsRange
-                            )
+                            'button',
+                            { type: 'button', className: 'btn btn-default m-l10', onClick: this.back.bind(this) },
+                            'Back'
                         )
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'box-footer clearfix' },
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn  btn-primary' },
-                        'Save'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default m-l10', onClick: this.back.bind(this) },
-                        'Back'
                     )
                 )
             )
@@ -253,19 +293,16 @@ var Milestones = function (_Component) {
     };
 
     return Milestones;
-}(_react.Component); /**
-                      * Created by qwr on 2017/9/13.
-                      */
-
+}(_react.Component);
 
 function mapStateToProps(state) {
     return {
-        account: state.account
+        milestones: state.milestones
     };
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(_actions.accountActions, dispatch);
+    return (0, _redux.bindActionCreators)(_actions.milestonesActions, dispatch);
 }
 
 //通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上

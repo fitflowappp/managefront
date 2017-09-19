@@ -108,7 +108,7 @@ class ChallengesEdit extends Component {
     //删除routines
     delChallenge(index) {
         Alert.confirm({
-            title: '删除', body: "确定删除？", surecb: function () {
+            title: 'delete', body: "confirm？", surecb: function () {
                 var workout = this.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);

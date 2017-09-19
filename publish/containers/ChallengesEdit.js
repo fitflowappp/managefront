@@ -164,7 +164,7 @@ var ChallengesEdit = function (_Component) {
 
     ChallengesEdit.prototype.delChallenge = function delChallenge(index) {
         _Alert2.default.confirm({
-            title: '删除', body: "确定删除？", surecb: function surecb() {
+            title: 'delete', body: "confirm？", surecb: function surecb() {
                 var workout = this.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);

@@ -282,8 +282,8 @@ class ConfirmModal extends Component {
                         {this.props.body}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button autoFocus bsStyle="primary" onClick={this.props.sure}>确定</Button>
-                        <Button onClick={this.props.close}>取消</Button>
+                        <Button autoFocus bsStyle="primary" onClick={this.props.sure}>yes</Button>
+                        <Button onClick={this.props.close}>no</Button>
                     </Modal.Footer>
 
                 </Modal>

@@ -376,12 +376,12 @@ var ConfirmModal = function (_Component4) {
                     _react2.default.createElement(
                         _reactBootstrap.Button,
                         { autoFocus: true, bsStyle: 'primary', onClick: this.props.sure },
-                        '\u786E\u5B9A'
+                        'yes'
                     ),
                     _react2.default.createElement(
                         _reactBootstrap.Button,
                         { onClick: this.props.close },
-                        '\u53D6\u6D88'
+                        'no'
                     )
                 )
             )

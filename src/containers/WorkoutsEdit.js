@@ -111,7 +111,7 @@ class WorkoutsEdit extends Component {
     delRoutines(index) {
         var that=this;
         Alert.confirm({
-            title: '删除', body: "确定删除？", surecb: function () {
+            title: 'delete', body: "confirm？", surecb: function () {
                 var workout = that.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);

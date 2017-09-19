@@ -116,7 +116,7 @@ var ChallengesOrderEdit = function (_Component) {
     ChallengesOrderEdit.prototype.delChallenge = function delChallenge(index) {
         var that = this;
         _Alert2.default.confirm({
-            title: '删除', body: "确定删除？", surecb: function surecb() {
+            title: 'delete', body: "confirm？", surecb: function surecb() {
                 var challengeOrder = that.state.challengeOrder;
                 challengeOrder.challenges.splice(index, 1);
                 that.setState(challengeOrder);

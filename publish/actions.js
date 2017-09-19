@@ -48,5 +48,8 @@ resource("Challenges", '/api/manage/yoga/challenge/:id', [], {
 resource("ChallengeOrders", '/api/manage/yoga/challengeset/:id', [], {
     actions: []
 });
+resource("MileStones", '/api/manage/yoga/milestone/:id', [], {
+    actions: []
+});
 exports.reducers = reducerObject;
 //# sourceMappingURL=actions.js.map

@@ -70,7 +70,7 @@ class ChallengesOrderEdit extends Component {
     delChallenge(index) {
         var that=this;
         Alert.confirm({
-            title: '删除', body: "确定删除？", surecb: function () {
+            title: 'delete', body: "confirm？", surecb: function () {
                 var challengeOrder = that.state.challengeOrder;
                 challengeOrder.challenges.splice(index, 1);
                 that.setState(challengeOrder);

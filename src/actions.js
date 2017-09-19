@@ -58,6 +58,12 @@ resource("ChallengeOrders", '/api/manage/yoga/challengeset/:id', [],
 
         ],
     });
+resource("MileStones", '/api/manage/yoga/milestone/:id', [],
+    {
+        actions: [
+
+        ],
+    });
 exports.reducers = reducerObject;
 
 

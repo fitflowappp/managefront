@@ -6,117 +6,130 @@ import Helmet from "react-helmet"
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {withRouter} from "react-router";
-import {Col, Pagination, Row} from "react-bootstrap"
-import {accountActions} from '../actions'
-import AccountModal from '../components/modal/AccountModal';
+import {Col, Form, Pagination, Panel, Row} from "react-bootstrap"
+import {milestonesActions} from '../actions'
 import Alert from '../components/Alert';
 class Milestones extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activePage:1,
-            editAccount: null,
-            exerciseRange:50,
-            workoutsRange:0,
+            milestone:{
+                achievementMinutes: 0,
+                achievementMinutesContent: "",
+
+                achievementWorkoutNum: 0,
+                achievementWorkoutContent: "",
+            },
+            success:false,
         };
     }
 
     componentDidMount() {
-        const role = this.state.role;
-        this.query(role);
+        this.query();
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.role != prevState.role) {
-            this.query();
-        }
+
     }
 
     query() {
-        const {queryAccount} = this.props;
-        const role = this.state.role;
-        queryAccount({"role": role});
-    }
-
-    add() {
-        this.setState({
-            editAccount: null,
-        })
-        this.refs['AccountModal'].getWrappedInstance().openModal();
-    }
-
-    edit(account) {
-        this.setState({
-            editAccount: Object.assign({}, account),
-        })
-        this.refs['AccountModal'].getWrappedInstance().openModal();
-    }
-
-    del(account) {
-        const that = this;
-        Alert.confirm({
-            title: '删除', body: "确定删除？", surecb: function () {
-                const {deleteAccount} = that.props;
-                deleteAccount(account, function (res) {
-
-                });
+        const {getMileStones} = this.props;
+        const that=this;
+        getMileStones({},function (res) {
+            if(!res.content.achievementMinutesContent){
+                res.content.achievementMinutesContent='';
             }
-        });
+            if(!res.content.achievementWorkoutContent){
+                res.content.achievementWorkoutContent='';
+            }
+            that.setState({
+                milestone:res.content,
+            })
+        })
     }
+    save(event){
+        event.preventDefault();
+        const {putMileStones} = this.props;
+        const that=this;
+        putMileStones(this.state.milestone,function (res) {
+            if(res.result.code==1){
+                that.setState({
+                    success:true,
+                })
+            }
+            Alert.info({info:res.result.msg})
+        })
+    }
+
     set(e){
         const name = e.target.getAttribute('name');
         const value = e.target.value;
-        var state = this.state;
-        state[name]=value;
-        this.setState(state)
+        var milestone = this.state.milestone;
+        milestone[name]=value;
+        this.setState(milestone)
     }
-    changeRole(role) {
-        this.setState({
-            role: role,
-        });
-    }
-    handleSelect(){
 
-    }
     back(){
         window.history.go(-1);
     }
     render() {
-        const accounts = this.props.account.list || [];
-        const role = this.state.role;
+        const milestone=this.state.milestone;
+        const success=this.state.success;
         return (
             <div>
                 <Helmet title="Milestones"/>
-                <AccountModal ref="AccountModal" query={this.query.bind(this)} role={role} editAccount={this.state.editAccount}/>
                 <div className="box">
+                    {success&&<div className="callout callout-success text-center">Your changes have been succesfully saved</div>}
                     <div className="box-header">
                         <h3 className="box-title">Edit Milestones</h3>
                     </div>
-                    <div className="box-body">
-                        <p>Users will receive an achievement after every how many total exercise minutes?</p>
-                        <Row style={{width:'600px'}}>
-                            <Col sm={2}><text>30</text></Col>
-                            <Col sm={8}>
-                                <input type="range" min="30" max="300" name="exerciseRange" className="pull-left"  value={this.state.exerciseRange} step={1} onChange={this.set.bind(this)}/>
-                            </Col>
-                            <Col sm={2}><text>300</text></Col>
-                            <Col sm={12}><p className="text-center text-primary">{this.state.exerciseRange}</p></Col>
-                        </Row>
-                        <p className="m-t40">Users will receive an achievement after every how many total workouts?</p>
-                        <Row style={{width:'600px'}}>
-                            <Col sm={2}><text>1</text></Col>
-                            <Col sm={8}>
-                                <input type="range" min="1" max="20" name="workoutsRange" className="pull-left"  value={this.state.workoutsRange} step={1} onChange={this.set.bind(this)}/>
-                            </Col>
-                            <Col sm={2}><text>20</text></Col>
-                            <Col sm={12}><p className="text-center text-primary">{this.state.workoutsRange}</p></Col>
-                        </Row>
-                    </div>
+                    <Form role="form"  onSubmit = {this.save.bind(this)}>
+                        <div className="box-body">
+                            <Panel style={{maxWidth:'600px'}}>
+                                <p>Exercise Minutes</p>
+                                <p>Users will receive an achievement after every how many total exercise minutes?</p>
+                                <Row style={{maxWidth:'600px'}}>
+                                    <Col sm={2} className="m-t5"><text>30</text></Col>
+                                    <Col sm={8} className="m-t5">
+                                        <input type="range" min="30" max="300" name="achievementMinutes" className="pull-left"  value={milestone.achievementMinutes} step={1} onChange={this.set.bind(this)}/>
+                                    </Col>
+                                    <Col sm={2} className="m-t5"><text>300</text></Col>
+                                    <Col sm={12}><p className="text-center text-primary">{milestone.achievementMinutes}</p></Col>
+                                    <Col sm={12} className="m-t5">
+                                        <label  className="m-t5">Pop-up box message for exercise minutes milestone:</label>
+                                    </Col>
+                                    <Col sm={12} className="m-t5">
+                                        <input type="text"  className="form-control" style={{maxWidth:'615px'}} required={true} placeholder="" name="achievementMinutesContent" value={milestone.achievementMinutesContent} onChange={this.set.bind(this)}/>
+                                    </Col>
+                                </Row>
+                            </Panel>
+                            <Panel style={{maxWidth:'600px'}} className="m-t40">
+                                <p>Total Workouts</p>
+                                <p>Users will receive an achievement after every how many total workouts?</p>
+                                <Row style={{maxWidth:'600px'}}>
+                                    <Col sm={2}><text>1</text></Col>
+                                    <Col sm={8}>
+                                        <input type="range" min="1" max="20" name="achievementWorkoutNum" className="pull-left"  value={milestone.achievementWorkoutNum} step={1} onChange={this.set.bind(this)}/>
+                                    </Col>
+                                    <Col sm={2}><text>20</text></Col>
+                                    <Col sm={12}><p className="text-center text-primary">{milestone.achievementWorkoutNum}</p></Col>
+                                    <Col sm={12} className="m-t5">
+                                        <label  className="m-t5">Pop-up box message for total wokrouts milestone:</label>
+                                    </Col>
+                                    <Col sm={12} className="m-t5">
+                                        <input type="text"  className="form-control" style={{maxWidth:'615px'}} required={true} placeholder="" name="achievementWorkoutContent" value={milestone.achievementWorkoutContent} onChange={this.set.bind(this)}/>
+                                    </Col>
+                                </Row>
+                            </Panel>
 
-                    <div className="box-footer clearfix">
-                        <button type="button"  className="btn  btn-primary">Save</button>
-                        <button type="button" className="btn btn-default m-l10" onClick={this.back.bind(this)}>Back</button>
-                    </div>
+                        </div>
+
+                        <div className="box-footer clearfix">
+                            <button type="submit"  className="btn  btn-primary">Save</button>
+                            <button type="button" className="btn btn-default m-l10" onClick={this.back.bind(this)}>Back</button>
+                        </div>
+                    </Form>
+
                 </div>
 
             </div>
@@ -125,12 +138,12 @@ class Milestones extends Component {
 }
 function mapStateToProps(state) {
     return {
-        account: state.account
+        milestones: state.milestones
     }
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(accountActions, dispatch)
+    return bindActionCreators(milestonesActions, dispatch)
 }
 
 //通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上

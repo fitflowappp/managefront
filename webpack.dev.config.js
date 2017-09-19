@@ -35,7 +35,7 @@ module.exports = {
             // host: 'localhost',
             // port: 3001,
             // server: { baseDir: ['public'] }
-            proxy: 'localhost:3001'
+            proxy: 'localhost:3002'
         })
     ],
     module: {

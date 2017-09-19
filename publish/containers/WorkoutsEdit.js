@@ -166,7 +166,7 @@ var WorkoutsEdit = function (_Component) {
     WorkoutsEdit.prototype.delRoutines = function delRoutines(index) {
         var that = this;
         _Alert2.default.confirm({
-            title: '删除', body: "确定删除？", surecb: function surecb() {
+            title: 'delete', body: "confirm？", surecb: function surecb() {
                 var workout = that.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);
