@@ -110,10 +110,10 @@ class ChallengesEdit extends Component {
         const that=this;
         Alert.confirm({
             title: 'delete', body: "confirm？", surecb: function () {
-                var workout = that.state.workout;
-                var routines = workout.routines;
-                routines.splice(index, 1);
-                that.setState(workout);
+                var challenge = that.state.challenge;
+                var workouts = challenge.workouts;
+                workouts.splice(index, 1);
+                that.setState(challenge);
             }
         });
     }

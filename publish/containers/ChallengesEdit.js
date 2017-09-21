@@ -166,10 +166,10 @@ var ChallengesEdit = function (_Component) {
         var that = this;
         _Alert2.default.confirm({
             title: 'delete', body: "confirm？", surecb: function surecb() {
-                var workout = that.state.workout;
-                var routines = workout.routines;
-                routines.splice(index, 1);
-                that.setState(workout);
+                var challenge = that.state.challenge;
+                var workouts = challenge.workouts;
+                workouts.splice(index, 1);
+                that.setState(challenge);
             }
         });
     };
