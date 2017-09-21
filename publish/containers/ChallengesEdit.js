@@ -163,12 +163,13 @@ var ChallengesEdit = function (_Component) {
 
 
     ChallengesEdit.prototype.delChallenge = function delChallenge(index) {
+        var that = this;
         _Alert2.default.confirm({
             title: 'delete', body: "confirm？", surecb: function surecb() {
-                var workout = this.state.workout;
+                var workout = that.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);
-                this.setState(workout);
+                that.setState(workout);
             }
         });
     };

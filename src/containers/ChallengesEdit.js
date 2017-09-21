@@ -107,12 +107,13 @@ class ChallengesEdit extends Component {
     }
     //删除routines
     delChallenge(index) {
+        const that=this;
         Alert.confirm({
             title: 'delete', body: "confirm？", surecb: function () {
-                var workout = this.state.workout;
+                var workout = that.state.workout;
                 var routines = workout.routines;
                 routines.splice(index, 1);
-                this.setState(workout);
+                that.setState(workout);
             }
         });
     }
