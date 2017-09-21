@@ -96,6 +96,7 @@ var ChallengesOrderEdit = function (_Component) {
     };
 
     ChallengesOrderEdit.prototype.pushChallenges = function pushChallenges(obj) {
+        obj.unlocked = false;
         var challengeOrder = this.state.challengeOrder;
         challengeOrder.challenges.push(obj);
         this.setState(challengeOrder);
@@ -126,6 +127,14 @@ var ChallengesOrderEdit = function (_Component) {
 
     ChallengesOrderEdit.prototype.openChallengesListModal = function openChallengesListModal() {
         this.refs['ChallengesListModal'].getWrappedInstance().openModal();
+    };
+
+    ChallengesOrderEdit.prototype.set = function set(index, e) {
+        var name = e.target.getAttribute('name');
+        var challengeOrder = this.state.challengeOrder;
+        var value = !challengeOrder.challenges[index].unlocked;
+        challengeOrder.challenges[index][name] = value;
+        this.setState(challengeOrder);
     };
 
     ChallengesOrderEdit.prototype.back = function back() {
@@ -174,7 +183,9 @@ var ChallengesOrderEdit = function (_Component) {
                                 challenge.code,
                                 ':',
                                 challenge.title,
-                                _react2.default.createElement('i', { onClick: _this2.delChallenge.bind(_this2, index), className: 'fa fa-close text-danger pointer m-l10', style: { fontSize: '20px' } })
+                                _react2.default.createElement('i', { onClick: _this2.delChallenge.bind(_this2, index), className: 'fa fa-close text-danger pointer m-l10 m-r10', style: { fontSize: '20px' } }),
+                                _react2.default.createElement('input', { type: 'checkbox', name: 'unlocked', checked: challenge.unlocked, onChange: _this2.set.bind(_this2, index) }),
+                                'unlocked?'
                             );
                         }),
                         _react2.default.createElement('i', { onClick: this.openChallengesListModal.bind(this), className: 'fa fa-plus-square text-primary pointer', style: { fontSize: '40px' } })

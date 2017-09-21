@@ -2,7 +2,7 @@
  * Created by john on 2016/5/27.
  */
 const port = 3002;
-var apiURL = 'http://manage.chuanpinmen.com';
+var apiURL = 'http://localhost';
 
 if (process.env.NODE_ENV !== "production") {
     apiURL = 'http://192.168.1.2:9009';

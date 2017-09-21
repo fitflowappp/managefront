@@ -52,6 +52,7 @@ class ChallengesOrderEdit extends Component {
         });
     }
     pushChallenges(obj){
+        obj.unlocked=false;
         var challengeOrder = this.state.challengeOrder;
         challengeOrder.challenges.push(obj);
         this.setState(challengeOrder);
@@ -80,6 +81,13 @@ class ChallengesOrderEdit extends Component {
     openChallengesListModal(){
         this.refs['ChallengesListModal'].getWrappedInstance().openModal();
     }
+    set(index,e){
+        var name =e.target.getAttribute('name');
+        var challengeOrder = this.state.challengeOrder;
+        var  value=!challengeOrder.challenges[index].unlocked;
+        challengeOrder.challenges[index][name]=value;
+        this.setState(challengeOrder);
+    }
     back(){
         this.props.router.goBack();
     }
@@ -101,7 +109,8 @@ class ChallengesOrderEdit extends Component {
                                 <div key={index} className="m-b5">
                                     <i onClick={this.upChallenge.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
                                     Routine{challenge.code}:{challenge.title}
-                                    <i onClick={this.delChallenge.bind(this,index)} className="fa fa-close text-danger pointer m-l10" style={{fontSize:'20px'}}></i>
+                                    <i onClick={this.delChallenge.bind(this,index)} className="fa fa-close text-danger pointer m-l10 m-r10" style={{fontSize:'20px'}}></i>
+                                    <input type="checkbox" name="unlocked" checked={challenge.unlocked} onChange={this.set.bind(this,index)}/>unlocked?
                                 </div>
                             )}
                             <i onClick={this.openChallengesListModal.bind(this)} className="fa fa-plus-square text-primary pointer" style={{fontSize:'40px'}}></i>
