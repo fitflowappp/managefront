@@ -37,6 +37,22 @@ class ChallengesOrder extends Component {
             Alert.info({info:res.result.msg});
         });
     }
+    primary(challengeorder){
+        var that=this;
+        const {putChallengeOrders} = this.props;
+        Alert.confirm({
+            title: 'publish', body: "confirm？", surecb: function () {
+                challengeorder.primary=!challengeorder.primary;
+                putChallengeOrders(challengeorder,function (res) {
+                    if(res.result.code==1){
+                        that.query();
+                    }
+                    Alert.info({info:res.result.msg});
+                });
+            }
+        });
+
+    }
     render() {
         const challengeorders = this.props.challengeorders.list||[];
         return (
@@ -58,6 +74,8 @@ class ChallengesOrder extends Component {
                             <tr role="row">
                                 <th>id</th>
                                 <th>crDate</th>
+                                <th>primary</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -65,6 +83,10 @@ class ChallengesOrder extends Component {
                                 <tr key={index}>
                                     <td><Link to={'/challengesordersedit/'+challengeorder.id}>{challengeorder.id}</Link></td>
                                     <td>{getTime(challengeorder.crDate)}</td>
+                                    <td>{challengeorder.primary?'yes':'no'}</td>
+                                    <td>
+                                        <button type="button" className="btn btn-default" onClick={this.primary.bind(this,challengeorder)}>publish</button>
+                                    </td>
                                 </tr>
                             )}
                             </tbody>

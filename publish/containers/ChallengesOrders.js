@@ -80,7 +80,26 @@ var ChallengesOrder = function (_Component) {
         });
     };
 
+    ChallengesOrder.prototype.primary = function primary(challengeorder) {
+        var that = this;
+        var putChallengeOrders = this.props.putChallengeOrders;
+
+        _Alert2.default.confirm({
+            title: 'publish', body: "confirm？", surecb: function surecb() {
+                challengeorder.primary = !challengeorder.primary;
+                putChallengeOrders(challengeorder, function (res) {
+                    if (res.result.code == 1) {
+                        that.query();
+                    }
+                    _Alert2.default.info({ info: res.result.msg });
+                });
+            }
+        });
+    };
+
     ChallengesOrder.prototype.render = function render() {
+        var _this2 = this;
+
         var challengeorders = this.props.challengeorders.list || [];
         return _react2.default.createElement(
             'div',
@@ -128,7 +147,13 @@ var ChallengesOrder = function (_Component) {
                                     'th',
                                     null,
                                     'crDate'
-                                )
+                                ),
+                                _react2.default.createElement(
+                                    'th',
+                                    null,
+                                    'primary'
+                                ),
+                                _react2.default.createElement('th', null)
                             )
                         ),
                         _react2.default.createElement(
@@ -151,6 +176,20 @@ var ChallengesOrder = function (_Component) {
                                         'td',
                                         null,
                                         (0, _common.getTime)(challengeorder.crDate)
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        challengeorder.primary ? 'yes' : 'no'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn btn-default', onClick: _this2.primary.bind(_this2, challengeorder) },
+                                            'publish'
+                                        )
                                     )
                                 );
                             })
