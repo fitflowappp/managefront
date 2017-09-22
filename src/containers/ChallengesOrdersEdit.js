@@ -108,7 +108,7 @@ class ChallengesOrderEdit extends Component {
                             {challenges&&challenges.map((challenge, index) =>
                                 <div key={index} className="m-b5">
                                     <i onClick={this.upChallenge.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
-                                    Routine{challenge.code}:{challenge.title}
+                                    Challenge{challenge.code}:{challenge.title}
                                     <i onClick={this.delChallenge.bind(this,index)} className="fa fa-close text-danger pointer m-l10 m-r10" style={{fontSize:'20px'}}></i>
                                     <input type="checkbox" name="unlocked" checked={challenge.unlocked} onChange={this.set.bind(this,index)}/>unlocked?
                                 </div>

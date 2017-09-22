@@ -56,7 +56,7 @@ class ChallengesListModal extends Component {
                 <Modal show={this.state.show} backdrop={false}>
                     <Form horizontal onSubmit={this._handleValidSubmit.bind(this)}>
                         <Modal.Header>
-                            <Modal.Title>Pick a Routine</Modal.Title>
+                            <Modal.Title>Pick a Challenge</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             {challenges.map((challenge, index) =>

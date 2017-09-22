@@ -179,7 +179,7 @@ var ChallengesOrderEdit = function (_Component) {
                                 'div',
                                 { key: index, className: 'm-b5' },
                                 _react2.default.createElement('i', { onClick: _this2.upChallenge.bind(_this2, index), className: 'fa fa-arrow-up text-primary pointer m-r10', style: { fontSize: '20px' } }),
-                                'Routine',
+                                'Challenge',
                                 challenge.code,
                                 ':',
                                 challenge.title,

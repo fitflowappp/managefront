@@ -105,7 +105,7 @@ var ChallengesListModal = function (_Component) {
                         _react2.default.createElement(
                             _reactBootstrap.Modal.Title,
                             null,
-                            'Pick a Routine'
+                            'Pick a Challenge'
                         )
                     ),
                     _react2.default.createElement(
