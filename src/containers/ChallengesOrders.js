@@ -62,13 +62,13 @@ class ChallengesOrder extends Component {
                     <div className="box-header">
                         <h3 className="box-title">Challenge Orders</h3>
                         <div className="box-tools">
-                            <button type="button" className="btn btn-primary pull-right m-l10" onClick={this.add.bind(this)}>
+                            <button type="button" className="btn btn-primary m-5" onClick={this.add.bind(this)}>
                                 New ChallengeOrders
                             </button>
                         </div>
                     </div>
 
-                    <div className="box-body">
+                    <div className="box-body table-responsive">
                         <table  className="table table-bordered dataTable">
                             <thead>
                             <tr role="row">

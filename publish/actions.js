@@ -36,6 +36,9 @@ resource("Account", '/api/user', [], {
 resource("User", '/api/user/:userId', [], {
     actions: [["risk", "get", "/api/user/risk/:userId", "risk"], ["userPayment", "get", "/api/payment/:userId"], ["agreement", "get", "/api/user/risk/:userId"], ["faculty", "get", "/api/user/risk/:userId"]]
 });
+resource("Dashboard", '/api/manage/yoga/dashboard', [], {
+    actions: []
+});
 resource("Routines", '/api/manage/yoga/routine/:id', [], {
     actions: []
 });

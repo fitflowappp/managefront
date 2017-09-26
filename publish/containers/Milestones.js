@@ -172,7 +172,7 @@ var Milestones = function (_Component) {
                                 _react2.default.createElement(
                                     _reactBootstrap.Col,
                                     { sm: 8, className: 'm-t5' },
-                                    _react2.default.createElement('input', { type: 'range', min: '30', max: '300', name: 'achievementMinutes', className: 'pull-left', value: milestone.achievementMinutes, step: 1, onChange: this.set.bind(this) })
+                                    _react2.default.createElement('input', { type: 'range', min: '30', max: '300', name: 'achievementMinutes', value: milestone.achievementMinutes, step: 1, onChange: this.set.bind(this) })
                                 ),
                                 _react2.default.createElement(
                                     _reactBootstrap.Col,
@@ -236,7 +236,7 @@ var Milestones = function (_Component) {
                                 _react2.default.createElement(
                                     _reactBootstrap.Col,
                                     { sm: 8 },
-                                    _react2.default.createElement('input', { type: 'range', min: '1', max: '20', name: 'achievementWorkoutNum', className: 'pull-left', value: milestone.achievementWorkoutNum, step: 1, onChange: this.set.bind(this) })
+                                    _react2.default.createElement('input', { type: 'range', min: '1', max: '20', name: 'achievementWorkoutNum', value: milestone.achievementWorkoutNum, step: 1, onChange: this.set.bind(this) })
                                 ),
                                 _react2.default.createElement(
                                     _reactBootstrap.Col,

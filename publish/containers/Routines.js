@@ -124,13 +124,13 @@ var Routines = function (_Component) {
                             { to: '/routinesedit/0' },
                             _react2.default.createElement(
                                 'button',
-                                { type: 'button', className: 'btn  btn-primary' },
+                                { type: 'button', className: 'btn  btn-primary m-5' },
                                 'Create New Routine'
                             )
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-l10' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5' },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )
@@ -138,7 +138,7 @@ var Routines = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'box-body' },
+                    { className: 'box-body table-responsive' },
                     _react2.default.createElement(
                         'table',
                         { className: 'table table-bordered dataTable' },

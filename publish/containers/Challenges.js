@@ -125,7 +125,7 @@ var Challenges = function (_Component) {
                             { to: '/challengesorders' },
                             _react2.default.createElement(
                                 'button',
-                                { type: 'button', className: 'btn  btn-default m-r10' },
+                                { type: 'button', className: 'btn  btn-default m-5' },
                                 'Manage Challenge Order'
                             )
                         ),
@@ -134,13 +134,13 @@ var Challenges = function (_Component) {
                             { to: '/challengesedit/0' },
                             _react2.default.createElement(
                                 'button',
-                                { type: 'button', className: 'btn  btn-primary' },
+                                { type: 'button', className: 'btn  btn-primary m-5' },
                                 'Create New Challenge'
                             )
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-l10' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5' },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )
@@ -148,7 +148,7 @@ var Challenges = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'box-body' },
+                    { className: 'box-body table-responsive' },
                     _react2.default.createElement(
                         'table',
                         { className: 'table table-bordered dataTable' },

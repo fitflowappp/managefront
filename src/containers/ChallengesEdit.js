@@ -136,7 +136,7 @@ class ChallengesEdit extends Component {
                         <div className="box-body">
                             <Row>
                                 <Col lg={3} className="m-t10">Challenge ID:</Col>
-                                <Col lg={9} className="m-t10">{}</Col>
+                                <Col lg={9} className="m-t10">{challenge.id}</Col>
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times started:</Col>

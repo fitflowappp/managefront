@@ -91,7 +91,7 @@ class Milestones extends Component {
                                 <Row style={{maxWidth:'600px'}}>
                                     <Col sm={2} className="m-t5"><text>30</text></Col>
                                     <Col sm={8} className="m-t5">
-                                        <input type="range" min="30" max="300" name="achievementMinutes" className="pull-left"  value={milestone.achievementMinutes} step={1} onChange={this.set.bind(this)}/>
+                                        <input type="range" min="30" max="300" name="achievementMinutes"   value={milestone.achievementMinutes} step={1} onChange={this.set.bind(this)}/>
                                     </Col>
                                     <Col sm={2} className="m-t5"><text>300</text></Col>
                                     <Col sm={12}><p className="text-center text-primary">{milestone.achievementMinutes}</p></Col>
@@ -109,7 +109,7 @@ class Milestones extends Component {
                                 <Row style={{maxWidth:'600px'}}>
                                     <Col sm={2}><text>1</text></Col>
                                     <Col sm={8}>
-                                        <input type="range" min="1" max="20" name="achievementWorkoutNum" className="pull-left"  value={milestone.achievementWorkoutNum} step={1} onChange={this.set.bind(this)}/>
+                                        <input type="range" min="1" max="20" name="achievementWorkoutNum"   value={milestone.achievementWorkoutNum} step={1} onChange={this.set.bind(this)}/>
                                     </Col>
                                     <Col sm={2}><text>20</text></Col>
                                     <Col sm={12}><p className="text-center text-primary">{milestone.achievementWorkoutNum}</p></Col>

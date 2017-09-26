@@ -3,6 +3,19 @@ body {
   background-color: #ecf0f5;
   word-break: break-all;
 }
+.content-wrapper{
+  minHeight: 667px;
+  padding: 60px 15px 15px 15px!important;
+}
+
+@media (max-width: 1200px){
+  .content-wrapper{
+    padding: 120px 5px 15px 5px!important;
+  }
+  .box-header > .box-tools{
+    position: static;
+  }
+}
 @font-face {
   font-family: 'mht';
   src: url('/src/images/font/mht.ttf');

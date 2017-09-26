@@ -138,7 +138,7 @@ class WorkoutsEdit extends Component {
                         <div className="box-body">
                             <Row>
                                 <Col lg={3} className="m-t10">Workout ID:</Col>
-                                <Col lg={9} className="m-t10">{}</Col>
+                                <Col lg={9} className="m-t10">{workout.id}</Col>
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times started:</Col>

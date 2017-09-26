@@ -231,7 +231,7 @@ var App = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'content-wrapper', style: { minHeight: '667px', padding: '60px 15px 15px 15px' } },
+                    { className: 'content-wrapper' },
                     this.props.children
                 ),
                 _react2.default.createElement(

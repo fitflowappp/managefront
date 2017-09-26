@@ -34,6 +34,12 @@ resource("User", '/api/user/:userId', [],
 
         ]
     });
+resource("Dashboard", '/api/manage/yoga/dashboard', [],
+    {
+        actions: [
+
+        ],
+    });
 resource("Routines", '/api/manage/yoga/routine/:id', [],
     {
         actions: [

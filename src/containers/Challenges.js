@@ -66,17 +66,17 @@ class Challenges extends Component {
                         <h3 className="box-title">Challenges</h3>
                         <div className="box-tools">
                             <Link to={'/challengesorders'}>
-                                <button type="button"  className="btn  btn-default m-r10">Manage Challenge Order</button>
+                                <button type="button"  className="btn  btn-default m-5">Manage Challenge Order</button>
                             </Link>
                             <Link to={'/challengesedit/0'}>
-                                <button type="button"  className="btn  btn-primary">Create New Challenge</button>
+                                <button type="button"  className="btn  btn-primary m-5">Create New Challenge</button>
                             </Link>
-                            <button type="button" className="btn btn-success pull-right m-l10">
+                            <button type="button" className="btn btn-success pull-right m-5">
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>
                     </div>
-                    <div className="box-body">
+                    <div className="box-body table-responsive">
                         <table  className="table table-bordered dataTable">
                             <thead>
                             <tr role="row">

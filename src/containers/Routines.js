@@ -65,14 +65,14 @@ class Routines extends Component {
                         <h3 className="box-title">Routines</h3>
                         <div className="box-tools">
                             <Link to={'/routinesedit/0'}>
-                                <button type="button"  className="btn  btn-primary">Create New Routine</button>
+                                <button type="button"  className="btn  btn-primary m-5">Create New Routine</button>
                             </Link>
-                            <button type="button" className="btn btn-success pull-right m-l10">
+                            <button type="button" className="btn btn-success pull-right m-5">
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>
                     </div>
-                    <div className="box-body">
+                    <div className="box-body table-responsive">
                         <table  className="table table-bordered dataTable">
                             <thead>
                             <tr role="row">

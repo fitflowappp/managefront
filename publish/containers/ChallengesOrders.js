@@ -121,14 +121,14 @@ var ChallengesOrder = function (_Component) {
                         { className: 'box-tools' },
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-primary pull-right m-l10', onClick: this.add.bind(this) },
+                            { type: 'button', className: 'btn btn-primary m-5', onClick: this.add.bind(this) },
                             'New ChallengeOrders'
                         )
                     )
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'box-body' },
+                    { className: 'box-body table-responsive' },
                     _react2.default.createElement(
                         'table',
                         { className: 'table table-bordered dataTable' },

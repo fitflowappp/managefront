@@ -93,7 +93,7 @@ class App extends Component {
                            </ul>
                        </section>
                    </aside>
-                   <div className="content-wrapper" style={{minHeight: '667px', padding: '60px 15px 15px 15px'}}>
+                   <div className="content-wrapper">
                        {this.props.children}
                    </div>
                    <footer className="main-footer">

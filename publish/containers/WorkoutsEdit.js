@@ -220,7 +220,11 @@ var WorkoutsEdit = function (_Component) {
                                 { lg: 3, className: 'm-t10' },
                                 'Workout ID:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 9, className: 'm-t10' })
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 9, className: 'm-t10' },
+                                workout.id
+                            )
                         ),
                         _react2.default.createElement(
                             _reactBootstrap.Row,
