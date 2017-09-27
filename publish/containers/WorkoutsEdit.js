@@ -102,6 +102,7 @@ var WorkoutsEdit = function (_Component) {
                     that.setState({
                         success: true
                     });
+                    that.back();
                 }
                 _Alert2.default.info({ info: res.result.msg });
             });

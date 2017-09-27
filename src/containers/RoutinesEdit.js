@@ -50,6 +50,7 @@ class RoutinesEdit extends Component {
                     that.setState({
                         success:true,
                     })
+                    that.back();
                 }
                 Alert.info({info:res.result.msg});
 
