@@ -84,8 +84,9 @@ var ChallengesOrder = function (_Component) {
         var that = this;
         var putChallengeOrders = this.props.putChallengeOrders;
 
+        var title = challengeorder.primary ? 'unPublish' : 'publish';
         _Alert2.default.confirm({
-            title: 'publish', body: "confirm？", surecb: function surecb() {
+            title: title, body: "confirm？", surecb: function surecb() {
                 challengeorder.primary = !challengeorder.primary;
                 putChallengeOrders(challengeorder, function (res) {
                     if (res.result.code == 1) {
@@ -188,7 +189,7 @@ var ChallengesOrder = function (_Component) {
                                         _react2.default.createElement(
                                             'button',
                                             { type: 'button', className: 'btn btn-default', onClick: _this2.primary.bind(_this2, challengeorder) },
-                                            'publish'
+                                            challengeorder.primary ? 'unPublish' : 'publish'
                                         )
                                     )
                                 );
