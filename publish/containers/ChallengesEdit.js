@@ -363,6 +363,11 @@ var ChallengesEdit = function (_Component) {
                                         _react2.default.createElement('i', { onClick: _this2.upChallenge.bind(_this2, index), className: 'fa fa-arrow-up text-primary pointer m-r10', style: { fontSize: '20px' } }),
                                         'Workout',
                                         workout.code,
+                                        _react2.default.createElement(
+                                            'text',
+                                            { className: 'm-l5' },
+                                            workout.id
+                                        ),
                                         ':',
                                         workout.title,
                                         _react2.default.createElement('i', { onClick: _this2.delChallenge.bind(_this2, index), className: 'fa fa-close text-danger pointer m-l10', style: { fontSize: '20px' } })

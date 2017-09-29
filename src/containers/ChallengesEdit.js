@@ -201,7 +201,7 @@ class ChallengesEdit extends Component {
                                     {challenge.workouts.map((workout, index) =>
                                         <div key={index} className="m-b5">
                                             <i onClick={this.upChallenge.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
-                                            Workout{workout.code}:{workout.title}
+                                            Workout{workout.code}<text className="m-l5">{workout.id}</text>:{workout.title}
                                             <i onClick={this.delChallenge.bind(this,index)} className="fa fa-close text-danger pointer m-l10" style={{fontSize:'20px'}}></i>
                                         </div>
                                     )}

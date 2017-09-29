@@ -210,7 +210,7 @@ class WorkoutsEdit extends Component {
                                     {workout.routines.map((routine, index) =>
                                         <div key={index} className="m-b5">
                                             <i onClick={this.upRoutines.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
-                                            Routine{routine.code}:{routine.title}
+                                            Routine{routine.code}<text className="m-l5">{routine.id}</text>:{routine.title}
                                             <i onClick={this.delRoutines.bind(this,index)} className="fa fa-close text-danger pointer m-l10" style={{fontSize:'20px'}}></i>
                                             </div>
                                     )}
