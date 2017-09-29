@@ -186,7 +186,7 @@ class WorkoutsEdit extends Component {
                                     <label className="m-t5">Completion Message:</label>
                                 </Col>
                                 <Col lg={9} className="m-t10">
-                                    <input type="text"  className="form-control" style={{maxWidth:'615px'}} required={true} placeholder="" name="message" value={workout.message} onChange={this.setWorkout.bind(this)}/>
+                                    <input type="text"  className="form-control" style={{maxWidth:'615px'}}  placeholder="" name="message" value={workout.message} onChange={this.setWorkout.bind(this)}/>
                                 </Col>
                             </Row>
                             <Row>

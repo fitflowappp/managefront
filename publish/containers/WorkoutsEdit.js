@@ -330,7 +330,7 @@ var WorkoutsEdit = function (_Component) {
                             _react2.default.createElement(
                                 _reactBootstrap.Col,
                                 { lg: 9, className: 'm-t10' },
-                                _react2.default.createElement('input', { type: 'text', className: 'form-control', style: { maxWidth: '615px' }, required: true, placeholder: '', name: 'message', value: workout.message, onChange: this.setWorkout.bind(this) })
+                                _react2.default.createElement('input', { type: 'text', className: 'form-control', style: { maxWidth: '615px' }, placeholder: '', name: 'message', value: workout.message, onChange: this.setWorkout.bind(this) })
                             )
                         ),
                         _react2.default.createElement(
