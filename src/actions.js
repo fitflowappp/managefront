@@ -49,7 +49,7 @@ resource("Routines", '/api/manage/yoga/routine/:id', [],
 resource("Workouts", '/api/manage/yoga/workout/:id', [],
     {
         actions: [
-
+            ["copyWorkout", "put", "/api/manage/yoga/workout/:id/copy/:title", "risk"],
         ],
     });
 resource("Challenges", '/api/manage/yoga/challenge/:id', [],

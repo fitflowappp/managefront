@@ -99,7 +99,21 @@ var Workouts = function (_Component) {
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
+    Workouts.prototype.copy = function copy(workout) {
+        var copyWorkout = this.props.copyWorkout;
+
+        var that = this;
+        copyWorkout({ id: workout.id, title: workout.title }, function (res) {
+            if (res.result.code == 1) {
+                that.query(that.state.condition);
+            }
+            _Alert2.default.info({ info: res.result.msg });
+        });
+    };
+
     Workouts.prototype.render = function render() {
+        var _this2 = this;
+
         var workouts = this.props.workouts.list || [];
         var condition = this.state.condition;
         return _react2.default.createElement(
@@ -193,7 +207,8 @@ var Workouts = function (_Component) {
                                     'th',
                                     { className: condition.sortkey == 'durationWatched' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'durationWatched') },
                                     'Total duration of being watched'
-                                )
+                                ),
+                                _react2.default.createElement('th', null)
                             )
                         ),
                         _react2.default.createElement(
@@ -231,7 +246,16 @@ var Workouts = function (_Component) {
                                     _react2.default.createElement('td', null),
                                     _react2.default.createElement('td', null),
                                     _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null)
+                                    _react2.default.createElement('td', null),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn  btn-default m-5', onClick: _this2.copy.bind(_this2, workout) },
+                                            'copy'
+                                        )
+                                    )
                                 );
                             })
                         )

@@ -55,6 +55,16 @@ class Workouts extends Component {
         this.query(condition);
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
+    copy(workout){
+        const {copyWorkout} = this.props;
+        const that=this;
+        copyWorkout({id:workout.id,title:workout.title},function (res) {
+            if(res.result.code==1){
+                that.query(that.state.condition);
+            }
+            Alert.info({info:res.result.msg});
+        });
+    }
     render() {
         const workouts = this.props.workouts.list||[];
         var condition=this.state.condition;
@@ -86,6 +96,7 @@ class Workouts extends Component {
                                 <th className={condition.sortkey=='usersStarted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersStarted')}>unique users started</th>
                                 <th className={condition.sortkey=='usersCompleted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersCompleted')}>unique users completed</th>
                                 <th className={condition.sortkey=='durationWatched'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'durationWatched')}>Total duration of being watched</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -100,6 +111,9 @@ class Workouts extends Component {
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td>
+                                        <button type="button"  className="btn  btn-default m-5" onClick={this.copy.bind(this,workout)}>copy</button>
+                                    </td>
                                 </tr>
                             )}
                             </tbody>
