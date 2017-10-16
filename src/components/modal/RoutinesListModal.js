@@ -62,7 +62,7 @@ class RoutinesListModal extends Component {
                             {routines.map((routine, index) =>
                                 <div className="m-t5" key={index}>
                                     <input type="radio" value={index} name="routines" />
-                                    {routine.id}:{routine.title}
+                                    {routine.code}:{routine.title}
                                     </div>
                             )}
                         </Modal.Body>

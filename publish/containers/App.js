@@ -152,8 +152,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'dashboard' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/dashboard' },
+                                    _reactRouter.Link,
+                                    { to: '/dashboard' },
                                     _react2.default.createElement(
                                         'span',
                                         null,
@@ -165,8 +165,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'routines' || pathname == 'routinesedit' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/routines' },
+                                    _reactRouter.Link,
+                                    { to: '/routines' },
                                     _react2.default.createElement(
                                         'span',
                                         null,
@@ -178,8 +178,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'workouts' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/workouts' },
+                                    _reactRouter.Link,
+                                    { to: '/workouts' },
                                     _react2.default.createElement(
                                         'span',
                                         null,
@@ -191,8 +191,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'challenges' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/challenges' },
+                                    _reactRouter.Link,
+                                    { to: '/challenges' },
                                     _react2.default.createElement(
                                         'span',
                                         null,
@@ -204,8 +204,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'users' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/users' },
+                                    _reactRouter.Link,
+                                    { to: '/users' },
                                     _react2.default.createElement(
                                         'span',
                                         null,
@@ -217,8 +217,8 @@ var App = function (_Component) {
                                 'li',
                                 { className: pathname == 'milestones' ? "active" : "" },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '/milestones' },
+                                    _reactRouter.Link,
+                                    { to: '/milestones' },
                                     _react2.default.createElement(
                                         'span',
                                         null,

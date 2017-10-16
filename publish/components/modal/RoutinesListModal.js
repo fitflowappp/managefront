@@ -116,7 +116,7 @@ var RoutinesListModal = function (_Component) {
                                 'div',
                                 { className: 'm-t5', key: index },
                                 _react2.default.createElement('input', { type: 'radio', value: index, name: 'routines' }),
-                                routine.id,
+                                routine.code,
                                 ':',
                                 routine.title
                             );

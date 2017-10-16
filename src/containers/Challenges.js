@@ -14,14 +14,14 @@ class Challenges extends Component {
         super(props);
         this.state = {
             condition:{
-                sortkey:'id',
-                sorttype:1, //1升0降
+                sortKey:'id',
+                sortType:1, //1升0降
             },
         };
     }
     componentDidMount() {
         var condition=this.props.location.query;
-        if(!condition.sortkey){
+        if(!condition.sortKey){
             condition=this.state.condition;
         }else{
 
@@ -38,18 +38,22 @@ class Challenges extends Component {
         const {queryChallenges} = this.props;
         queryChallenges(condition);
     }
-    setCondition(sortkey){
+    setCondition(sortKey){
         var condition=this.state.condition;
-        var sorttype;
+        var sortType;
 
-        if(sortkey==condition.sortkey){
-            sorttype=Number(!condition.sorttype);
+        if(sortKey==condition.sortKey){
+            if(condition.sortType==1){
+                sortType=-1;
+            }else{
+                sortType=1;
+            }
         }else{
-            sorttype=1;
+            sortType=1;
         }
 
-        condition.sortkey=sortkey;
-        condition.sorttype=sorttype;
+        condition.sortKey=sortKey;
+        condition.sortType=sortType;
 
         this.setState(condition);
         this.query(condition);
@@ -80,14 +84,14 @@ class Challenges extends Component {
                         <table  className="table table-bordered dataTable">
                             <thead>
                             <tr role="row">
-                                <th className={condition.sortkey=='id'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'id')}>ID</th>
-                                <th className={condition.sortkey=='code'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'code')}>Code</th>
-                                <th className={condition.sortkey=='title'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'title')}>Title</th>
-                                <th className={condition.sortkey=='duration'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'duration')}>Sequence in Challenge Homepage</th>
-                                <th className={condition.sortkey=='timesStarted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'timesStarted')}>times started</th>
-                                <th className={condition.sortkey=='timesCompleted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'timesCompleted')}>times completed</th>
-                                <th className={condition.sortkey=='usersStarted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersStarted')}>unique users started</th>
-                                <th className={condition.sortkey=='usersCompleted'?(condition.sorttype?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersCompleted')}>unique users completed</th>
+                                <th className={condition.sortKey=='id'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'id')}>ID</th>
+                                <th className={condition.sortKey=='code'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'code')}>Code</th>
+                                <th className={condition.sortKey=='title'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'title')}>Title</th>
+                                {/*<th className={condition.sortKey=='duration'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'duration')}>Sequence in Challenge Homepage</th>*/}
+                                <th className={condition.sortKey=='timesStarted'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'timesStarted')}>times started</th>
+                                <th className={condition.sortKey=='timesCompleted'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'timesCompleted')}>times completed</th>
+                                <th className={condition.sortKey=='usersStarted'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersStarted')}>unique users started</th>
+                                <th className={condition.sortKey=='usersCompleted'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'usersCompleted')}>unique users completed</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -96,11 +100,11 @@ class Challenges extends Component {
                                     <td><Link to={'/challengesedit/'+challenge.id}>{challenge.id}</Link></td>
                                     <td>{challenge.code}</td>
                                     <td>{challenge.title}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    {/*<td></td>*/}
+                                    <td>{challenge.startedTimes}</td>
+                                    <td>{challenge.completedTimes}</td>
+                                    <td>{challenge.startedUserCount}</td>
+                                    <td>{challenge.completedUserCount}</td>
                                 </tr>
                             )}
                             </tbody>

@@ -16,6 +16,8 @@ import Challenges from "./containers/Challenges";
 import ChallengesEdit from "./containers/ChallengesEdit";
 import ChallengesOrders from "./containers/ChallengesOrders";
 import ChallengesOrdersEdit from "./containers/ChallengesOrdersEdit";
+import Users from "./containers/Users";
+import UserDetails from "./containers/UserDetails";
 import Milestones from "./containers/Milestones";
 import {getMuser} from "./common/auth"
 function requireAuth(nextState, replace) {
@@ -54,7 +56,10 @@ const routes = (
         <Route path="challengesedit/:id" component={ChallengesEdit} name="challenges" onEnter={requireAuth}/>
         <Route path="challengesorders" component={ChallengesOrders} name="challenges" onEnter={requireAuth}/>
         <Route path="challengesordersedit/:id" component={ChallengesOrdersEdit} name="challenges" onEnter={requireAuth}/>
+        <Route path="users" component={Users} name="users" onEnter={requireAuth}/>
+        <Route path="userdetails/:id" component={UserDetails} name="users" onEnter={requireAuth}/>
         <Route path="milestones" component={Milestones} name="milestones" onEnter={requireAuth}/>
+
     </Route>
 );
 export default routes;

@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {withRouter, browserHistory} from "react-router";
+import {withRouter, browserHistory, Link} from "react-router";
 import {getMuser, logout} from "../common/auth";
 import cookie from 'react-cookie'
 class App extends Component {
@@ -61,34 +61,34 @@ class App extends Component {
                        <section className="sidebar">
                            <ul className="sidebar-menu tree" data-widget="tree">
                                <li className={pathname=='dashboard'?"active":""}>
-                                   <a href="/dashboard">
+                                   <Link to="/dashboard">
                                        <span>dashboard</span>
-                                   </a>
+                                   </Link>
                                </li>
                                <li className={(pathname=='routines'||pathname=='routinesedit')?"active":""}>
-                                   <a href="/routines">
+                                   <Link to="/routines">
                                        <span>routines</span>
-                                   </a>
+                                   </Link>
                                </li>
                                <li className={pathname=='workouts'?"active":""}>
-                                   <a href="/workouts">
+                                   <Link to="/workouts">
                                        <span>workouts</span>
-                                   </a>
+                                   </Link>
                                </li>
                                <li className={pathname=='challenges'?"active":""}>
-                                   <a href="/challenges">
+                                   <Link to="/challenges">
                                        <span>challenges</span>
-                                   </a>
+                                   </Link>
                                </li>
                                <li className={pathname=='users'?"active":""}>
-                                   <a href="/users">
+                                   <Link to="/users">
                                        <span>users</span>
-                                   </a>
+                                   </Link>
                                </li>
                                <li className={pathname=='milestones'?"active":""}>
-                                   <a href="/milestones">
+                                   <Link to="/milestones">
                                        <span>milestones</span>
-                                   </a>
+                                   </Link>
                                </li>
                            </ul>
                        </section>

@@ -235,13 +235,21 @@ var WorkoutsEdit = function (_Component) {
                                 { lg: 3, className: 'm-t10' },
                                 'Number of times started:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 3, className: 'm-t10' }),
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 3, className: 'm-t10' },
+                                workout.startedTimes
+                            ),
                             _react2.default.createElement(
                                 _reactBootstrap.Col,
                                 { lg: 3, className: 'm-t10' },
                                 'Number of unique users started:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 3, className: 'm-t10' })
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 3, className: 'm-t10' },
+                                workout.startedUserCount
+                            )
                         ),
                         _react2.default.createElement(
                             _reactBootstrap.Row,
@@ -251,13 +259,21 @@ var WorkoutsEdit = function (_Component) {
                                 { lg: 3, className: 'm-t10' },
                                 'Number of times completed:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 3, className: 'm-t10' }),
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 3, className: 'm-t10' },
+                                workout.completedTimes
+                            ),
                             _react2.default.createElement(
                                 _reactBootstrap.Col,
                                 { lg: 3, className: 'm-t10' },
                                 'Number of unique users completed:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 3, className: 'm-t10' })
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 3, className: 'm-t10' },
+                                workout.completedUserCount
+                            )
                         ),
                         _react2.default.createElement(
                             _reactBootstrap.Row,
@@ -376,13 +392,12 @@ var WorkoutsEdit = function (_Component) {
                                         'div',
                                         { key: index, className: 'm-b5' },
                                         _react2.default.createElement('i', { onClick: _this2.upRoutines.bind(_this2, index), className: 'fa fa-arrow-up text-primary pointer m-r10', style: { fontSize: '20px' } }),
-                                        'Routine',
-                                        routine.code,
                                         _react2.default.createElement(
                                             'text',
-                                            { className: 'm-l5' },
-                                            routine.id
+                                            { className: 'm-r5' },
+                                            'Routine'
                                         ),
+                                        routine.code,
                                         ':',
                                         routine.title,
                                         _react2.default.createElement('i', { onClick: _this2.delRoutines.bind(_this2, index), className: 'fa fa-close text-danger pointer m-l10', style: { fontSize: '20px' } })

@@ -62,6 +62,14 @@ var _ChallengesOrdersEdit = require('./containers/ChallengesOrdersEdit');
 
 var _ChallengesOrdersEdit2 = _interopRequireDefault(_ChallengesOrdersEdit);
 
+var _Users = require('./containers/Users');
+
+var _Users2 = _interopRequireDefault(_Users);
+
+var _UserDetails = require('./containers/UserDetails');
+
+var _UserDetails2 = _interopRequireDefault(_UserDetails);
+
 var _Milestones = require('./containers/Milestones');
 
 var _Milestones2 = _interopRequireDefault(_Milestones);
@@ -110,6 +118,8 @@ var routes = _react2.default.createElement(
     _react2.default.createElement(_reactRouter.Route, { path: 'challengesedit/:id', component: _ChallengesEdit2.default, name: 'challenges', onEnter: requireAuth }),
     _react2.default.createElement(_reactRouter.Route, { path: 'challengesorders', component: _ChallengesOrders2.default, name: 'challenges', onEnter: requireAuth }),
     _react2.default.createElement(_reactRouter.Route, { path: 'challengesordersedit/:id', component: _ChallengesOrdersEdit2.default, name: 'challenges', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'users', component: _Users2.default, name: 'users', onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'userdetails/:id', component: _UserDetails2.default, name: 'users', onEnter: requireAuth }),
     _react2.default.createElement(_reactRouter.Route, { path: 'milestones', component: _Milestones2.default, name: 'milestones', onEnter: requireAuth })
 );
 exports.default = routes;

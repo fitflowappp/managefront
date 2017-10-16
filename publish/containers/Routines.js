@@ -53,8 +53,8 @@ var Routines = function (_Component) {
 
         _this.state = {
             condition: {
-                sortkey: 'id',
-                sorttype: 1 //1升0降
+                sortKey: 'id',
+                sortType: 1 //1升-1降
             }
         };
         return _this;
@@ -62,7 +62,7 @@ var Routines = function (_Component) {
 
     Routines.prototype.componentDidMount = function componentDidMount() {
         var condition = this.props.location.query;
-        if (!condition.sortkey) {
+        if (!condition.sortKey) {
             condition = this.state.condition;
         } else {
             this.setState({
@@ -80,18 +80,22 @@ var Routines = function (_Component) {
         queryRoutines(condition);
     };
 
-    Routines.prototype.setCondition = function setCondition(sortkey) {
+    Routines.prototype.setCondition = function setCondition(sortKey) {
         var condition = this.state.condition;
-        var sorttype;
+        var sortType;
 
-        if (sortkey == condition.sortkey) {
-            sorttype = Number(!condition.sorttype);
+        if (sortKey == condition.sortKey) {
+            if (condition.sortType == 1) {
+                sortType = -1;
+            } else {
+                sortType = 1;
+            }
         } else {
-            sorttype = 1;
+            sortType = 1;
         }
 
-        condition.sortkey = sortkey;
-        condition.sorttype = sorttype;
+        condition.sortKey = sortKey;
+        condition.sortType = sortType;
 
         this.setState(condition);
         this.query(condition);
@@ -150,37 +154,37 @@ var Routines = function (_Component) {
                                 { role: 'row' },
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'id' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'id') },
+                                    { className: condition.sortKey == 'id' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'id') },
                                     'ID'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'code' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'code') },
+                                    { className: condition.sortKey == 'code' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'code') },
                                     'Code'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'title' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'title') },
+                                    { className: condition.sortKey == 'title' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'title') },
                                     'Title'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'duration' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'duration') },
+                                    { className: condition.sortKey == 'duration' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'duration') },
                                     'Duration'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'display' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'display') },
+                                    { className: condition.sortKey == 'display' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'display') },
                                     'Display in Workout detail page?'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'started' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'started') },
+                                    { className: condition.sortKey == 'startedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'started') },
                                     'Number of times started'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'skipped' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'skipped') },
+                                    { className: condition.sortKey == 'skippedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'skipped') },
                                     'Number of times skipped'
                                 )
                             )
@@ -221,8 +225,16 @@ var Routines = function (_Component) {
                                         null,
                                         routine.display ? 'yes' : 'no'
                                     ),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null)
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        routine.startedTimes
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        routine.skippedTimes
+                                    )
                                 );
                             })
                         )

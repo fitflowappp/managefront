@@ -62,7 +62,7 @@ class ChallengesListModal extends Component {
                             {challenges.map((challenge, index) =>
                                 <div className="m-t5" key={index}>
                                     <input type="radio" value={index} name="challenge" />
-                                    {challenge.id}:{challenge.title}
+                                    {challenge.code}:{challenge.title}
                                 </div>
                             )}
                         </Modal.Body>

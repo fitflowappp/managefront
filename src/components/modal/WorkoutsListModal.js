@@ -62,7 +62,7 @@ class WorkoutsListModal extends Component {
                             {workouts.map((workout, index) =>
                                 <div className="m-t5" key={index}>
                                     <input type="radio" value={index} name="workouts" />
-                                    {workout.id}:{workout.title}
+                                    {workout.code}:{workout.title}
                                 </div>
                             )}
                         </Modal.Body>

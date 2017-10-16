@@ -114,11 +114,11 @@ class RoutinesEdit extends Component {
                            </Row>
                            <Row>
                                <Col lg={3} className="m-t10">Number of times started:</Col>
-                               <Col lg={9} className="m-t10"></Col>
+                               <Col lg={9} className="m-t10">{routine.startedTimes}</Col>
                            </Row>
                            <Row>
                                <Col lg={3} className="m-t10">Number of times skipped:</Col>
-                               <Col lg={9} className="m-t10"></Col>
+                               <Col lg={9} className="m-t10">{routine.skippedTimes}</Col>
                            </Row>
                         <Row className="m-t40">
                             <Col lg={3} className="m-t10">

@@ -192,7 +192,11 @@ var RoutinesEdit = function (_Component) {
                                 { lg: 3, className: 'm-t10' },
                                 'Number of times started:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 9, className: 'm-t10' })
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 9, className: 'm-t10' },
+                                routine.startedTimes
+                            )
                         ),
                         _react2.default.createElement(
                             _reactBootstrap.Row,
@@ -202,7 +206,11 @@ var RoutinesEdit = function (_Component) {
                                 { lg: 3, className: 'm-t10' },
                                 'Number of times skipped:'
                             ),
-                            _react2.default.createElement(_reactBootstrap.Col, { lg: 9, className: 'm-t10' })
+                            _react2.default.createElement(
+                                _reactBootstrap.Col,
+                                { lg: 9, className: 'm-t10' },
+                                routine.skippedTimes
+                            )
                         ),
                         _react2.default.createElement(
                             _reactBootstrap.Row,

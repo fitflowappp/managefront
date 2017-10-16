@@ -143,17 +143,17 @@ class WorkoutsEdit extends Component {
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times started:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{workout.startedTimes}</Col>
 
                                 <Col lg={3} className="m-t10">Number of unique users started:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{workout.startedUserCount}</Col>
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times completed:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{workout.completedTimes}</Col>
 
                                 <Col lg={3} className="m-t10">Number of unique users completed:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{workout.completedUserCount}</Col>
                             </Row>
                             <Row className="m-t40">
                                 <Col lg={3} className="m-t10">
@@ -210,7 +210,7 @@ class WorkoutsEdit extends Component {
                                     {workout.routines.map((routine, index) =>
                                         <div key={index} className="m-b5">
                                             <i onClick={this.upRoutines.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
-                                            Routine{routine.code}<text className="m-l5">{routine.id}</text>:{routine.title}
+                                            <text className="m-r5">Routine</text>{routine.code}:{routine.title}
                                             <i onClick={this.delRoutines.bind(this,index)} className="fa fa-close text-danger pointer m-l10" style={{fontSize:'20px'}}></i>
                                             </div>
                                     )}

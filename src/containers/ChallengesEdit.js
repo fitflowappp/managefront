@@ -141,17 +141,17 @@ class ChallengesEdit extends Component {
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times started:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{challenge.startedTimes}</Col>
 
                                 <Col lg={3} className="m-t10">Number of unique users started:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{challenge.startedUserCount}</Col>
                             </Row>
                             <Row>
                                 <Col lg={3} className="m-t10">Number of times completed:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{challenge.completedTimes}</Col>
 
                                 <Col lg={3} className="m-t10">Number of unique users completed:</Col>
-                                <Col lg={3} className="m-t10"></Col>
+                                <Col lg={3} className="m-t10">{challenge.completedUserCount}</Col>
                             </Row>
                             <Row className="m-t40">
                                 <Col lg={3} className="m-t10">
@@ -201,7 +201,7 @@ class ChallengesEdit extends Component {
                                     {challenge.workouts.map((workout, index) =>
                                         <div key={index} className="m-b5">
                                             <i onClick={this.upChallenge.bind(this,index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{fontSize:'20px'}}></i>
-                                            Workout{workout.code}<text className="m-l5">{workout.id}</text>:{workout.title}
+                                            <text className="m-r5">Workout</text>{workout.code}:{workout.title}
                                             <i onClick={this.delChallenge.bind(this,index)} className="fa fa-close text-danger pointer m-l10" style={{fontSize:'20px'}}></i>
                                         </div>
                                     )}

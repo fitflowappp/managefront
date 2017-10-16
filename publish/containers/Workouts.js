@@ -53,8 +53,8 @@ var Workouts = function (_Component) {
 
         _this.state = {
             condition: {
-                sortkey: 'id',
-                sorttype: 1 //1升0降
+                sortKey: 'id',
+                sortType: 1 //1升0降
             }
         };
         return _this;
@@ -62,7 +62,7 @@ var Workouts = function (_Component) {
 
     Workouts.prototype.componentDidMount = function componentDidMount() {
         var condition = this.props.location.query;
-        if (!condition.sortkey) {
+        if (!condition.sortKey) {
             condition = this.state.condition;
         } else {
 
@@ -81,18 +81,22 @@ var Workouts = function (_Component) {
         queryWorkouts(condition);
     };
 
-    Workouts.prototype.setCondition = function setCondition(sortkey) {
+    Workouts.prototype.setCondition = function setCondition(sortKey) {
         var condition = this.state.condition;
-        var sorttype;
+        var sortType;
 
-        if (sortkey == condition.sortkey) {
-            sorttype = Number(!condition.sorttype);
+        if (sortKey == condition.sortKey) {
+            if (condition.sortType == 1) {
+                sortType = -1;
+            } else {
+                sortType = 1;
+            }
         } else {
-            sorttype = 1;
+            sortType = 1;
         }
 
-        condition.sortkey = sortkey;
-        condition.sorttype = sorttype;
+        condition.sortKey = sortKey;
+        condition.sortType = sortType;
 
         this.setState(condition);
         this.query(condition);
@@ -165,47 +169,47 @@ var Workouts = function (_Component) {
                                 { role: 'row' },
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'id' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'id') },
+                                    { className: condition.sortKey == 'id' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'id') },
                                     'ID'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'code' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'code') },
+                                    { className: condition.sortKey == 'code' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'code') },
                                     'Code'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'title' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'title') },
+                                    { className: condition.sortKey == 'title' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'title') },
                                     'Title'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'duration' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'duration') },
+                                    { className: condition.sortKey == 'duration' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'duration') },
                                     'Duration'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'timesStarted' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'timesStarted') },
+                                    { className: condition.sortKey == 'startedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'timesStarted') },
                                     'times started'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'timesCompleted' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'timesCompleted') },
+                                    { className: condition.sortKey == 'completedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'timesCompleted') },
                                     'times completed'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'usersStarted' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'usersStarted') },
+                                    { className: condition.sortKey == 'startedUserCount' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'usersStarted') },
                                     'unique users started'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'usersCompleted' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'usersCompleted') },
+                                    { className: condition.sortKey == 'completedUserCount' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'usersCompleted') },
                                     'unique users completed'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortkey == 'durationWatched' ? condition.sorttype ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'durationWatched') },
+                                    { className: condition.sortKey == 'totalDuration' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'durationWatched') },
                                     'Total duration of being watched'
                                 ),
                                 _react2.default.createElement('th', null)
@@ -242,11 +246,31 @@ var Workouts = function (_Component) {
                                         null,
                                         workout.duration
                                     ),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        workout.startedTimes
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        workout.completedTimes
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        workout.startedUserCount
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        workout.completedUserCount
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        workout.totalDuration
+                                    ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
