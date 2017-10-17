@@ -55,48 +55,29 @@ var UserDetails = function (_Component) {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, _Component.call(this, props));
 
-        _this.state = {
-            condition: {
-                number: 1,
-                size: 20
-            }
-        };
+        _this.state = {};
         return _this;
     }
 
     UserDetails.prototype.componentDidMount = function componentDidMount() {
-        var condition = this.props.location.query;
-        if (!condition.number) {
-            condition = this.state.condition;
-        } else {
-            this.setState({
-                condition: condition
-            });
-        }
+        var condition = {
+            id: this.props.routeParams.id
+        };
         this.query(condition);
     };
 
     UserDetails.prototype.query = function query(condition) {
-        var queryDashboard = this.props.queryDashboard;
-        //queryDashboard(condition);
+        var getUsers = this.props.getUsers;
 
-        queryDashboard();
+        getUsers(condition);
     };
 
-    //分页
-
-
-    UserDetails.prototype.handleSelect = function handleSelect(eventKey, e) {
-        var condition = this.state.condition;
-        condition.number = eventKey;
-        this.setState(condition);
-        this.query(condition);
-        this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
+    UserDetails.prototype.back = function back() {
+        this.props.router.goBack();
     };
 
     UserDetails.prototype.render = function render() {
-        var dashboards = this.props.dashboard.list || [];
-        var condition = this.state.condition;
+        var user = this.props.users.data || {};
         return _react2.default.createElement(
             'div',
             null,
@@ -110,19 +91,15 @@ var UserDetails = function (_Component) {
                     _react2.default.createElement(
                         'h3',
                         { className: 'box-title' },
-                        'Analytics Dashboard'
+                        'UserDetails'
                     ),
                     _react2.default.createElement(
                         'div',
                         { className: 'box-tools' },
                         _react2.default.createElement(
-                            _reactRouter.Link,
-                            { to: '/milestones' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn  btn-primary m-5' },
-                                'Edit Milestones'
-                            )
+                            'button',
+                            { type: 'button', className: 'btn  btn-primary m-5', onClick: this.back.bind(this) },
+                            'back'
                         ),
                         _react2.default.createElement(
                             'button',
@@ -144,129 +121,311 @@ var UserDetails = function (_Component) {
                             _react2.default.createElement(
                                 'tr',
                                 null,
-                                _react2.default.createElement('th', null),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Facebook registration submitted'
+                                    'User ID'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Facebook registration completed'
+                                    user.user && user.user.id
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Facebook ID'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Challenges started by unique users'
+                                    user.facebookUid
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Email Address'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Challenges completed by unique users'
+                                    user.email
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Profile Picture'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Workouts started by unique users'
+                                    _react2.default.createElement('img', { src: 'data:image/gif;base64,' + user.headerImgContent, alt: 'none', width: 30 })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Gender'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Workouts completed by unique users'
+                                    user.gender
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Facebook permissions'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Unique users who completed a Workout'
+                                    user.facebookPermissions
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Timestamp of App First Opened'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
+                                    null,
+                                    (0, _common.getTime)(user.firstOpenDate)
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Registered?'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.unRegistered ? 'no' : 'yes'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Timestamp of Facebook Registration submitted'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    (0, _common.getTime)(user.submittedDate)
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Timestamp of Registration Completed'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    (0, _common.getTime)(user.registrationCompletedDate)
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Unlocked challenge IDs'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.unlockedChallengeIds && user.userState.unlockedChallengeIds.join(',')
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Current challenge ID'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.currentChallengeId
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Number of completed challenges'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.completedChallengeNum
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Started Workout IDs'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.startedWorkoutIds
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Current Workout ID'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.currentWorkoutId
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
                                     null,
                                     'Cumulative duration of videos watched'
                                 ),
                                 _react2.default.createElement(
-                                    'th',
+                                    'td',
                                     null,
-                                    'Unique users who turned scheduling on'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Unique users who have received achievements'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Unique users who have shared on social media'
+                                    user.userState && user.userState.duration
                                 )
                             ),
-                            dashboards.map(function (dashboard, index) {
-                                return _react2.default.createElement(
-                                    'tr',
-                                    { key: index },
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        (0, _common.getTime)(dashboard.date)
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.facebookRegSubmitNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.facebookRegCompleteNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.challengeStartNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.challengeCompleteNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.workoutStartNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.workoutCompleteNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.oneWorkoutCompleteUserNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.totalDuration
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.calReminderOnNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.achievementNum
-                                    ),
-                                    _react2.default.createElement(
-                                        'td',
-                                        null,
-                                        dashboard.shareNum
-                                    )
-                                );
-                            })
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Number of completed Workouts'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userState && user.userState.completedWorkoutNum
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Scheduling in-app notification on?'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userConfiguration && user.userConfiguration.notification
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Scheduling calendar reminder on?'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userConfiguration && user.userConfiguration.remider
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Scheduling days'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userConfiguration && user.userConfiguration.schedulingDays && user.userConfiguration.schedulingDays.join(',')
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Scheduling time of day'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.userConfiguration && (0, _common.getTime)(user.userConfiguration.schedulingTime)
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    'Cumulative number of social shares'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    user.shareCount
+                                )
+                            )
                         )
                     )
                 )
@@ -279,12 +438,12 @@ var UserDetails = function (_Component) {
 
 function mapStateToProps(state) {
     return {
-        dashboard: state.dashboard
+        users: state.users
     };
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(_actions.dashboardActions, dispatch);
+    return (0, _redux.bindActionCreators)(_actions.usersActions, dispatch);
 }
 
 //通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上

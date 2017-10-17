@@ -475,18 +475,24 @@ function isEqual(a, b) {
 }
 //时间转型
 function getTime(time) {
-    var date = new Date(time);
-    var fmt = "yyyy-MM-dd";
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var date = date.getDate();
-    fmt = fmt.replace("yyyy", year);
-    fmt = fmt.replace("MM", fix(month));
-    fmt = fmt.replace("dd", fix(date));
-    return fmt;
-    function fix(n) {
-        return n < 10 ? "0" + n : n;
+    if (!time) {
+        return ' ';
     }
+    var myDate = new Date(time);
+    var year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+    var month = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
+    if (month < 10) month = '0' + month.toString();
+    var date = myDate.getDate();
+    if (date < 10) date = '0' + date.toString(); //获取当前日(1-31)
+    var hour = myDate.getHours(); //获取当前小时数(0-23)
+    if (hour < 10) hour = '0' + hour.toString(); //获取当前日(1-31)
+    var minute = myDate.getMinutes(); //获取当前分钟数(0-59)
+    if (minute < 10) minute = '0' + minute.toString(); //获取当前日(1-31)
+
+    var strTime;
+    strTime = year + '-' + month + '-' + date + ' ' + hour + ':' + minute;
+
+    return strTime;
 }
 // 回到顶部
 function scrollTop() {

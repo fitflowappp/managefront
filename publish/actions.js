@@ -33,8 +33,8 @@ resource("Account", '/api/user', [], {
         // }
     }
 });
-resource("User", '/api/user/:userId', [], {
-    actions: [["risk", "get", "/api/user/risk/:userId", "risk"], ["userPayment", "get", "/api/payment/:userId"], ["agreement", "get", "/api/user/risk/:userId"], ["faculty", "get", "/api/user/risk/:userId"]]
+resource("Users", '/api/manage/admin/user/:id', [], {
+    actions: []
 });
 resource("Dashboard", '/api/manage/yoga/dashboard', [], {
     actions: []

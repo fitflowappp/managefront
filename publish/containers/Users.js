@@ -57,7 +57,7 @@ var Users = function (_Component) {
 
         _this.state = {
             condition: {
-                number: 1,
+                number: 0,
                 size: 20
             }
         };
@@ -77,31 +77,27 @@ var Users = function (_Component) {
     };
 
     Users.prototype.query = function query(condition) {
-        var queryDashboard = this.props.queryDashboard;
-        //queryDashboard(condition);
+        var queryUsers = this.props.queryUsers;
 
-        queryDashboard();
+        queryUsers(condition);
     };
 
-    //分页
-
-
-    Users.prototype.handleSelect = function handleSelect(eventKey, e) {
+    Users.prototype.setCondition = function setCondition(eventKey) {
         var condition = this.state.condition;
-        condition.number = eventKey;
+        condition.number = eventKey - 1;
         this.setState(condition);
         this.query(condition);
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
     Users.prototype.render = function render() {
-        var dashboards = this.props.dashboard.list || [];
+        var users = this.props.users.list;
         var condition = this.state.condition;
         return _react2.default.createElement(
             'div',
             null,
             _react2.default.createElement(_reactHelmet2.default, { title: 'Users' }),
-            _react2.default.createElement(
+            users && _react2.default.createElement(
                 'div',
                 { className: 'box' },
                 _react2.default.createElement(
@@ -206,75 +202,107 @@ var Users = function (_Component) {
                                     'Cumulative number of social shares'
                                 )
                             ),
-                            dashboards.map(function (dashboard, index) {
+                            users.content.map(function (user, index) {
                                 return _react2.default.createElement(
                                     'tr',
                                     { key: index },
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        (0, _common.getTime)(dashboard.date)
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: "/userdetails/" + user.user.id },
+                                            user.user.id
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.facebookRegSubmitNum
+                                        user.facebookUid
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.facebookRegCompleteNum
+                                        user.email
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.challengeStartNum
+                                        (0, _common.getTime)(user.firstOpenDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.challengeCompleteNum
+                                        user.unRegistered ? 'no' : 'yes'
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.workoutStartNum
+                                        (0, _common.getTime)(user.submittedDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.workoutCompleteNum
+                                        (0, _common.getTime)(user.registrationCompletedDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.oneWorkoutCompleteUserNum
+                                        user.userState && user.userState.currentChallengeId
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.totalDuration
+                                        user.userState && user.userState.completedChallengeNum
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.calReminderOnNum
+                                        user.userState && user.userState.duration
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.achievementNum
+                                        user.userState && user.userState.completedWorkoutNum
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        dashboard.shareNum
+                                        user.userConfiguration && user.userConfiguration.notification
                                     ),
-                                    _react2.default.createElement('td', null),
-                                    _react2.default.createElement('td', null)
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        user.userConfiguration && user.userConfiguration.remider
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        user.shareCount
+                                    )
                                 );
                             })
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'box-footer clearfix' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'pull-right' },
+                        _react2.default.createElement(_reactBootstrap.Pagination, {
+                            prev: true,
+                            next: true,
+                            first: true,
+                            last: true,
+                            ellipsis: true,
+                            boundaryLinks: true,
+                            items: users.totalPages,
+                            maxButtons: 2,
+                            activePage: parseInt(condition.number) + 1,
+                            onSelect: this.setCondition.bind(this)
+                        })
                     )
                 )
             )
@@ -286,12 +314,12 @@ var Users = function (_Component) {
 
 function mapStateToProps(state) {
     return {
-        dashboard: state.dashboard
+        users: state.users
     };
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(_actions.dashboardActions, dispatch);
+    return (0, _redux.bindActionCreators)(_actions.usersActions, dispatch);
 }
 
 //通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上
