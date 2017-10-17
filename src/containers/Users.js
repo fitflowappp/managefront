@@ -97,7 +97,7 @@ class Users extends Component {
                             </tr>
                              {users.content.map((user, index) =>
                              <tr key={index}>
-                             <td><Link to={"/userdetails/"+user.user.id}>{user.user.id}</Link></td>
+                             <td><Link to={"/yogausers/userdetails/"+user.user.id}>{user.user.id}</Link></td>
                              <td>{user.facebookUid}</td>
                              <td>{user.email}</td>
                              <td>{getTime(user.user.crDate)}</td>

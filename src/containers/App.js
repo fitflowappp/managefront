@@ -81,7 +81,7 @@ class App extends Component {
                                    </Link>
                                </li>
                                <li className={pathname=='users'?"active":""}>
-                                   <Link to="/users">
+                                   <Link to="/yogausers">
                                        <span>users</span>
                                    </Link>
                                </li>
