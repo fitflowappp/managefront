@@ -209,7 +209,7 @@ var UserDetails = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    (0, _common.getTime)(user.user.crDate)
+                                    (0, _common.getTime)(user.user && user.user.crDate)
                                 )
                             ),
                             _react2.default.createElement(
@@ -223,7 +223,7 @@ var UserDetails = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    user.user.unRegistered ? 'no' : 'yes'
+                                    user.user && user.user.unRegistered ? 'no' : 'yes'
                                 )
                             ),
                             _react2.default.createElement(
@@ -237,7 +237,7 @@ var UserDetails = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    (0, _common.getTime)(user.user.facebookRegistrationSumbmittedDate)
+                                    (0, _common.getTime)(user.user && user.user.facebookRegistrationSumbmittedDate)
                                 )
                             ),
                             _react2.default.createElement(
@@ -251,7 +251,7 @@ var UserDetails = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    (0, _common.getTime)(user.user.registerDate)
+                                    (0, _common.getTime)(user.user && user.user.registerDate)
                                 )
                             ),
                             _react2.default.createElement(

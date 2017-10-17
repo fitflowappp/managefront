@@ -46,7 +46,20 @@ class Users extends Component {
         this.query(condition);
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
-
+    super(user){
+        const {putSuper,deleteSuper}=this.props;
+        const that=this;
+        const condition = that.state.condition;
+        if(user.role==0){
+            deleteSuper({uid:user.id},function (res) {
+                that.query(condition)
+            })
+        }else{
+            putSuper({uid:user.id},function (res) {
+                that.query(condition)
+            })
+        }
+    }
     render() {
         const users = this.props.users.list;
         const condition=this.state.condition;
@@ -80,6 +93,7 @@ class Users extends Component {
                                 <th>Scheduling in-app notification on?</th>
                                 <th>Scheduling calendar reminder on?</th>
                                 <th>Cumulative number of social shares</th>
+                                <th></th>
                             </tr>
                              {users.content.map((user, index) =>
                              <tr key={index}>
@@ -97,6 +111,10 @@ class Users extends Component {
                              <td>{user.userConfiguration&&user.userConfiguration.notification}</td>
                              <td>{user.userConfiguration&&user.userConfiguration.remider}</td>
                              <td>{user.shareCount}</td>
+                             <td>
+                                 {user.user&&user.user.role==0&&<button type="button" className="btn btn-danger m-5" onClick={this.super.bind(this,user.user)}>cancelSuper</button>}
+                                 {user.user&&user.user.role!=0&&<button type="button" className="btn btn-success m-5" onClick={this.super.bind(this,user.user)}>setSuper</button>}
+                             </td>
                              </tr>
                              )}
                             </tbody>

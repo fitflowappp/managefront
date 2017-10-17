@@ -27,7 +27,8 @@ resource("Account", '/api/user', [],
 resource("Users", '/api/manage/admin/user/:id', [],
     {
         actions: [
-
+            ["putSuper", "put", "/api/manage/admin/user/:uid/super"],
+            ["deleteSuper", "delete", "/api/manage/admin/user/:uid/super"],
         ]
     });
 resource("Dashboard", '/api/manage/yoga/dashboard', [],

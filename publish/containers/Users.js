@@ -90,7 +90,27 @@ var Users = function (_Component) {
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
+    Users.prototype.super = function _super(user) {
+        var _props = this.props,
+            putSuper = _props.putSuper,
+            deleteSuper = _props.deleteSuper;
+
+        var that = this;
+        var condition = that.state.condition;
+        if (user.role == 0) {
+            deleteSuper({ uid: user.id }, function (res) {
+                that.query(condition);
+            });
+        } else {
+            putSuper({ uid: user.id }, function (res) {
+                that.query(condition);
+            });
+        }
+    };
+
     Users.prototype.render = function render() {
+        var _this2 = this;
+
         var users = this.props.users.list;
         var condition = this.state.condition;
         return _react2.default.createElement(
@@ -200,7 +220,8 @@ var Users = function (_Component) {
                                     'th',
                                     null,
                                     'Cumulative number of social shares'
-                                )
+                                ),
+                                _react2.default.createElement('th', null)
                             ),
                             users.content.map(function (user, index) {
                                 return _react2.default.createElement(
@@ -279,6 +300,20 @@ var Users = function (_Component) {
                                         'td',
                                         null,
                                         user.shareCount
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        user.user && user.user.role == 0 && _react2.default.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn btn-danger m-5', onClick: _this2.super.bind(_this2, user.user) },
+                                            'cancelSuper'
+                                        ),
+                                        user.user && user.user.role != 0 && _react2.default.createElement(
+                                            'button',
+                                            { type: 'button', className: 'btn btn-success m-5', onClick: _this2.super.bind(_this2, user.user) },
+                                            'setSuper'
+                                        )
                                     )
                                 );
                             })

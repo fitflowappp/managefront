@@ -78,19 +78,19 @@ class UserDetails extends Component {
                             </tr>
                             <tr>
                                 <td>Timestamp of App First Opened</td>
-                                <td>{getTime(user.user.crDate)}</td>
+                                <td>{getTime(user.user&&user.user.crDate)}</td>
                             </tr>
                             <tr>
                                 <td>Registered?</td>
-                                <td>{user.user.unRegistered?'no':'yes'}</td>
+                                <td>{user.user&&user.user.unRegistered?'no':'yes'}</td>
                             </tr>
                             <tr>
                                 <td>Timestamp of Facebook Registration submitted</td>
-                                <td>{getTime(user.user.facebookRegistrationSumbmittedDate)}</td>
+                                <td>{getTime(user.user&&user.user.facebookRegistrationSumbmittedDate)}</td>
                             </tr>
                             <tr>
                                 <td>Timestamp of Registration Completed</td>
-                                <td>{getTime(user.user.registerDate)}</td>
+                                <td>{getTime(user.user&&user.user.registerDate)}</td>
                             </tr>
                             <tr>
                                 <td>Unlocked challenge IDs</td>
