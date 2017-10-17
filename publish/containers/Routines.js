@@ -179,12 +179,12 @@ var Routines = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortKey == 'startedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'started') },
+                                    { className: condition.sortKey == 'startedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'startedTimes') },
                                     'Number of times started'
                                 ),
                                 _react2.default.createElement(
                                     'th',
-                                    { className: condition.sortKey == 'skippedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'skipped') },
+                                    { className: condition.sortKey == 'skippedTimes' ? condition.sortType == 1 ? "sorting_asc" : "sorting_desc" : 'sorting', onClick: this.setCondition.bind(this, 'skippedTimes') },
                                     'Number of times skipped'
                                 )
                             )
