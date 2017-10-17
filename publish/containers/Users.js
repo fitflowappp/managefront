@@ -228,22 +228,22 @@ var Users = function (_Component) {
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        (0, _common.getTime)(user.firstOpenDate)
+                                        (0, _common.getTime)(user.user.crDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        user.unRegistered ? 'no' : 'yes'
+                                        user.user.unRegistered ? 'no' : 'yes'
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        (0, _common.getTime)(user.submittedDate)
+                                        (0, _common.getTime)(user.user.facebookRegistrationSumbmittedDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        (0, _common.getTime)(user.registrationCompletedDate)
+                                        (0, _common.getTime)(user.user.registerDate)
                                     ),
                                     _react2.default.createElement(
                                         'td',

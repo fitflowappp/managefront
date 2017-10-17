@@ -86,10 +86,10 @@ class Users extends Component {
                              <td><Link to={"/userdetails/"+user.user.id}>{user.user.id}</Link></td>
                              <td>{user.facebookUid}</td>
                              <td>{user.email}</td>
-                             <td>{getTime(user.firstOpenDate)}</td>
-                             <td>{user.unRegistered?'no':'yes'}</td>
-                             <td>{getTime(user.submittedDate)}</td>
-                             <td>{getTime(user.registrationCompletedDate)}</td>
+                             <td>{getTime(user.user.crDate)}</td>
+                             <td>{user.user.unRegistered?'no':'yes'}</td>
+                             <td>{getTime(user.user.facebookRegistrationSumbmittedDate)}</td>
+                             <td>{getTime(user.user.registerDate)}</td>
                              <td>{user.userState&&user.userState.currentChallengeId}</td>
                              <td>{user.userState&&user.userState.completedChallengeNum}</td>
                              <td>{user.userState&&user.userState.duration}</td>
