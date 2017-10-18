@@ -205,7 +205,7 @@ var App = function (_Component) {
                                 { className: pathname == 'users' ? "active" : "" },
                                 _react2.default.createElement(
                                     _reactRouter.Link,
-                                    { to: '/yogausers' },
+                                    { to: '/yusers' },
                                     _react2.default.createElement(
                                         'span',
                                         null,

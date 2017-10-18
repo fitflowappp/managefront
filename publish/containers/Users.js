@@ -232,7 +232,7 @@ var Users = function (_Component) {
                                         null,
                                         _react2.default.createElement(
                                             _reactRouter.Link,
-                                            { to: "/yogausers/userdetails/" + user.user.id },
+                                            { to: "/yusers/userdetails/" + user.user.id },
                                             user.user.id
                                         )
                                     ),

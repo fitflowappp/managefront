@@ -56,8 +56,8 @@ const routes = (
         <Route path="challengesedit/:id" component={ChallengesEdit} name="challenges" onEnter={requireAuth}/>
         <Route path="challengesorders" component={ChallengesOrders} name="challenges" onEnter={requireAuth}/>
         <Route path="challengesordersedit/:id" component={ChallengesOrdersEdit} name="challenges" onEnter={requireAuth}/>
-        <Route path="yogausers" component={Users} name="users" onEnter={requireAuth}/>
-        <Route path="yogausers/userdetails/:id" component={UserDetails} name="users" onEnter={requireAuth}/>
+        <Route path="yusers" component={Users} name="users" onEnter={requireAuth}/>
+        <Route path="yusers/userdetails/:id" component={UserDetails} name="users" onEnter={requireAuth}/>
         <Route path="milestones" component={Milestones} name="milestones" onEnter={requireAuth}/>
 
     </Route>
