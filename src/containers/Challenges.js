@@ -59,6 +59,9 @@ class Challenges extends Component {
         this.query(condition);
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
+    csv(){
+        window.location.href="/api/manage/yoga/challenge/csv";
+    }
     render() {
         const challenges = this.props.challenges.list||[];
         var condition=this.state.condition;
@@ -75,7 +78,7 @@ class Challenges extends Component {
                             <Link to={'/challengesedit/0'}>
                                 <button type="button"  className="btn  btn-primary m-5">Create New Challenge</button>
                             </Link>
-                            <button type="button" className="btn btn-success pull-right m-5">
+                            <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>

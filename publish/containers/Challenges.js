@@ -103,6 +103,10 @@ var Challenges = function (_Component) {
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
+    Challenges.prototype.csv = function csv() {
+        window.location.href = "/api/manage/yoga/challenge/csv";
+    };
+
     Challenges.prototype.render = function render() {
         var challenges = this.props.challenges.list || [];
         var condition = this.state.condition;
@@ -144,7 +148,7 @@ var Challenges = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-5' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5', onClick: this.csv.bind(this) },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )

@@ -115,6 +115,10 @@ var Workouts = function (_Component) {
         });
     };
 
+    Workouts.prototype.csv = function csv() {
+        window.location.href = '/api/manage/yoga/workout/csv';
+    };
+
     Workouts.prototype.render = function render() {
         var _this2 = this;
 
@@ -149,7 +153,7 @@ var Workouts = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-5' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5', onClick: this.csv.bind(this) },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )

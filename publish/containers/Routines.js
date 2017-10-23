@@ -102,6 +102,10 @@ var Routines = function (_Component) {
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
+    Routines.prototype.csv = function csv() {
+        window.location.href = '/api/manage/yoga/routine/csv';
+    };
+
     Routines.prototype.render = function render() {
         var routines = this.props.routines.list || [];
         var condition = this.state.condition;
@@ -134,7 +138,7 @@ var Routines = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-5' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5', onClick: this.csv.bind(this) },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )

@@ -69,6 +69,9 @@ class Workouts extends Component {
             Alert.info({info:res.result.msg});
         });
     }
+    csv(){
+        window.location.href='/api/manage/yoga/workout/csv';
+    }
     render() {
         const workouts = this.props.workouts.list||[];
         var condition=this.state.condition;
@@ -82,7 +85,7 @@ class Workouts extends Component {
                             <Link to={'/workoutsedit/0'}>
                                 <button type="button"  className="btn  btn-primary m-5">Create New Workout</button>
                             </Link>
-                            <button type="button" className="btn btn-success pull-right m-5">
+                            <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>

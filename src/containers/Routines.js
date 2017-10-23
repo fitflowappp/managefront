@@ -58,6 +58,9 @@ class Routines extends Component {
         this.query(condition);
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
+    csv(){
+        window.location.href='/api/manage/yoga/routine/csv';
+    }
     render() {
         const routines = this.props.routines.list||[];
         var condition=this.state.condition;
@@ -71,7 +74,7 @@ class Routines extends Component {
                             <Link to={'/routinesedit/0'}>
                                 <button type="button"  className="btn  btn-primary m-5">Create New Routine</button>
                             </Link>
-                            <button type="button" className="btn btn-success pull-right m-5">
+                            <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>

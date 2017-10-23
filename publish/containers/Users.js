@@ -108,6 +108,10 @@ var Users = function (_Component) {
         }
     };
 
+    Users.prototype.csv = function csv() {
+        window.location.href = '/api/manage/admin/csv';
+    };
+
     Users.prototype.render = function render() {
         var _this2 = this;
 
@@ -133,7 +137,7 @@ var Users = function (_Component) {
                         { className: 'box-tools' },
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-5' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5', onClick: this.csv.bind(this) },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )

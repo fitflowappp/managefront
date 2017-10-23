@@ -60,6 +60,9 @@ class Users extends Component {
             })
         }
     }
+    csv(){
+        window.location.href='/api/manage/admin/csv';
+    }
     render() {
         const users = this.props.users.list;
         const condition=this.state.condition;
@@ -70,7 +73,7 @@ class Users extends Component {
                     <div className="box-header">
                         <h3 className="box-title">Users</h3>
                         <div className="box-tools">
-                            <button type="button" className="btn btn-success pull-right m-5">
+                            <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>
