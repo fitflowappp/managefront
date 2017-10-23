@@ -48,6 +48,9 @@ class Dashboard extends Component {
         this.query(condition);
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
+    csv(){
+        window.location.href='/api/manage/dashboard/csv';
+    }
     render() {
         const dashboards = this.props.dashboard.list||[];
         const condition=this.state.condition;
@@ -59,7 +62,7 @@ class Dashboard extends Component {
                         <h3 className="box-title">Analytics Dashboard</h3>
                         <div className="box-tools">
                             <Link to="/milestones"><button type="button"  className="btn  btn-primary m-5">Edit Milestones</button></Link>
-                            <button type="button" className="btn btn-success pull-right m-5">
+                            <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
                             </button>
                         </div>

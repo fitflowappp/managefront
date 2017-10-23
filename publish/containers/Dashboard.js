@@ -94,6 +94,10 @@ var Dashboard = function (_Component) {
         this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
     };
 
+    Dashboard.prototype.csv = function csv() {
+        window.location.href = '/api/manage/dashboard/csv';
+    };
+
     Dashboard.prototype.render = function render() {
         var dashboards = this.props.dashboard.list || [];
         var condition = this.state.condition;
@@ -126,7 +130,7 @@ var Dashboard = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-success pull-right m-5' },
+                            { type: 'button', className: 'btn btn-success pull-right m-5', onClick: this.csv.bind(this) },
                             _react2.default.createElement('i', { className: 'fa fa-download' }),
                             'Export csv'
                         )
