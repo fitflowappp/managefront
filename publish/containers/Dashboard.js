@@ -95,7 +95,7 @@ var Dashboard = function (_Component) {
     };
 
     Dashboard.prototype.csv = function csv() {
-        window.location.href = '/api/manage/dashboard/csv';
+        window.location.href = '/api/manage/yoga/dashboard/csv';
     };
 
     Dashboard.prototype.render = function render() {

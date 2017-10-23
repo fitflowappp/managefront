@@ -49,7 +49,7 @@ class Dashboard extends Component {
         this.props.router.replace({pathname: this.props.location.pathname, query: condition});
     }
     csv(){
-        window.location.href='/api/manage/dashboard/csv';
+        window.location.href='/api/manage/yoga/dashboard/csv';
     }
     render() {
         const dashboards = this.props.dashboard.list||[];
