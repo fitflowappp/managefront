@@ -123,11 +123,11 @@ class UserDetails extends Component {
                             </tr>
                             <tr>
                                 <td>Scheduling in-app notification on?</td>
-                                <td>{user.userConfiguration&&user.userConfiguration.notification}</td>
+                                <td>{user.userConfiguration&&user.userConfiguration.notification?'yes':'no'}</td>
                             </tr>
                             <tr>
                                 <td>Scheduling calendar reminder on?</td>
-                                <td>{user.userConfiguration&&user.userConfiguration.remider}</td>
+                                <td>{user.userConfiguration&&user.userConfiguration.remider?'yes':'no'}</td>
                             </tr>
                             <tr>
                                 <td>Scheduling days</td>

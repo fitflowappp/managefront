@@ -111,8 +111,8 @@ class Users extends Component {
                              <td>{user.userState&&user.userState.completedChallengeNum}</td>
                              <td>{user.userState&&user.userState.duration}</td>
                              <td>{user.userState&&user.userState.completedWorkoutNum}</td>
-                             <td>{user.userConfiguration&&user.userConfiguration.notification}</td>
-                             <td>{user.userConfiguration&&user.userConfiguration.remider}</td>
+                             <td>{user.userConfiguration&&user.userConfiguration.notification?'yes':'no'}</td>
+                             <td>{user.userConfiguration&&user.userConfiguration.remider?'yes':'no'}</td>
                              <td>{user.shareCount}</td>
                              <td>
                                  {user.user&&user.user.role==0&&<button type="button" className="btn btn-danger m-5" onClick={this.super.bind(this,user.user)}>cancelSuper</button>}

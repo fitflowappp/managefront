@@ -293,12 +293,12 @@ var Users = function (_Component) {
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        user.userConfiguration && user.userConfiguration.notification
+                                        user.userConfiguration && user.userConfiguration.notification ? 'yes' : 'no'
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        user.userConfiguration && user.userConfiguration.remider
+                                        user.userConfiguration && user.userConfiguration.remider ? 'yes' : 'no'
                                     ),
                                     _react2.default.createElement(
                                         'td',
