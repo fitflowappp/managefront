@@ -15,12 +15,12 @@ grunt
 
 #部署
 在项目根目录下
-npm install -g pm2
-npm install
+* npm install -g pm2
+* npm install
 在.bashrc中
-export NODE_ENV=production
+* export NODE_ENV=production
 #启动
-pm2 start publish/server.js
-重新加载
-pm2 reload all
+* pm2 start publish/server.js
+#重新加载
+* pm2 reload all
 
