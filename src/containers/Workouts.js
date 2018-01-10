@@ -83,7 +83,10 @@ class Workouts extends Component {
                         <h3 className="box-title">Workouts</h3>
                         <div className="box-tools">
                             <Link to={'/workoutsedit/0'}>
-                                <button type="button"  className="btn  btn-primary m-5">Create New Workout</button>
+                                <button type="button"  className="btn  btn-default m-5">Create New Workout</button>
+                            </Link>
+                            <Link to={'/singlesOrders'}>
+                                <button type="button"  className="btn  btn-primary m-5">Manage Singles Order</button>
                             </Link>
                             <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
@@ -103,6 +106,7 @@ class Workouts extends Component {
                                 <th className={condition.sortKey=='startedUserCount'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'startedUserCount')}>unique users started</th>
                                 <th className={condition.sortKey=='completedUserCount'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'completedUserCount')}>unique users completed</th>
                                 <th className={condition.sortKey=='totalDuration'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'totalDuration')}>Total duration of being watched</th>
+                                <th >singles</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -118,6 +122,7 @@ class Workouts extends Component {
                                     <td>{workout.startedUserCount}</td>
                                     <td>{workout.completedUserCount}</td>
                                     <td>{workout.totalDuration}</td>
+                                    <td>{workout.single?'yes':'no'}</td>
                                     <td>
                                         <button type="button"  className="btn  btn-default m-5" onClick={this.copy.bind(this,workout)}>copy</button>
                                     </td>

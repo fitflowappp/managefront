@@ -16,6 +16,7 @@ import Challenges from "./containers/Challenges";
 import ChallengesEdit from "./containers/ChallengesEdit";
 import ChallengesOrders from "./containers/ChallengesOrders";
 import ChallengesOrdersEdit from "./containers/ChallengesOrdersEdit";
+import SinglesOrders from "./containers/SinglesOrders.js";
 import Users from "./containers/Users";
 import UserDetails from "./containers/UserDetails";
 import Milestones from "./containers/Milestones";
@@ -59,6 +60,7 @@ const routes = (
         <Route path="yusers" component={Users} name="users" onEnter={requireAuth}/>
         <Route path="yusers/userdetails/:id" component={UserDetails} name="users" onEnter={requireAuth}/>
         <Route path="milestones" component={Milestones} name="milestones" onEnter={requireAuth}/>
+        <Route path="singlesOrders" component={SinglesOrders} name="singlesOrders" onEnter={requireAuth}/>
 
     </Route>
 );

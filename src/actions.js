@@ -61,6 +61,13 @@ resource("ChallengeOrders", '/api/manage/yoga/challengeset/:id', [],
 
         ],
     });
+resource("SinglesOrders", '/api/manage/yoga/singles/:id', [],
+    {
+        actions: [
+            ["updateSinglesSort", "post", "/api/manage/yoga/singles/:id/sort/:sort"],
+            ["addSinglesWorkout", "post", "/api/manage/yoga/singles/addSingles/:id"]
+        ],
+    });
 resource("MileStones", '/api/manage/yoga/milestone/:id', [],
     {
         actions: [

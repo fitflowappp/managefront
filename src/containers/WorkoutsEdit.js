@@ -85,6 +85,9 @@ class WorkoutsEdit extends Component {
         var name =target.getAttribute('name');
         var workout = this.state.workout;
         var value = target.value;
+        if (name=="single") {
+            value=!workout.single;
+        }
         workout[name]=value;
         this.setState(workout);
     }
@@ -202,6 +205,7 @@ class WorkoutsEdit extends Component {
                                     }
                                 </Col>
                             </Row>
+                            
                             <Row>
                                 <Col lg={3} className="m-t10">
                                     <label className="m-t5">Associated Routines:</label>

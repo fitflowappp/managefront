@@ -39,7 +39,6 @@ var agent = new http.Agent({maxSockets: Number.MAX_VALUE});
 //     // }
 // }));
 var httpProxy = require('http-proxy');
-
 var apiProxy = httpProxy.createProxyServer({
     target: apiURL,
     ignorePath: false,
@@ -69,6 +68,7 @@ server.all("/api/*", function (req, res) {
     var url = req.url;
     url = url.replace("/api/", "/");
     req.url = url;
+    console.log("url:"+url);
     apiProxy.web(req, res);
     // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });

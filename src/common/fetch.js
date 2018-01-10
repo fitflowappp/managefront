@@ -18,6 +18,7 @@ export function fetch() {
         timeout: 60000,
         headers
     };
+    console.log(conf['baseURL']);
     if (process.env.BROWSER) {
         delete conf["baseURL"];
     }
@@ -79,7 +80,6 @@ export function apiFactory(method, successCB, errorCB, actions = [], _url, _para
             }
         }
     }
-
     var match2 = url.match(/\/\:[a-zA-Z]+/g);
 
     if (match2) {
@@ -87,6 +87,8 @@ export function apiFactory(method, successCB, errorCB, actions = [], _url, _para
             url = url.replace(match2[i], "");
         }
     }
+    console.log("url:"+url);
+
     // if (params) {
     //     for (let i in params) {
     //         url = url.replace("/:" + i, "/" + params[i]);

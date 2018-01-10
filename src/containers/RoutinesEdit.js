@@ -159,6 +159,22 @@ class RoutinesEdit extends Component {
                                 </video>
                                 }
                             </Col>
+                            
+                        </Row>
+                        <Row>
+                                <Col lg={3} className="m-t10">
+                                    <label className="m-t5">Routine Image:</label>
+                                </Col>
+                                <Col lg={3} className="m-t10">
+                                    <input type="file" name="coverImg"  onChange={this.uploadFile.bind(this)}/>
+                                </Col>
+                                <Col lg={6} className="m-t10">
+                                    {routine.coverImg&&
+                                    <img src={routine.coverImg.contentUri} alt="routine Image" width={100}/>
+                                    }
+                                </Col>
+                        </Row>
+                        <Row>
                             <Col lg={12}>
                                 <div className="checkbox">
                                     <label>
