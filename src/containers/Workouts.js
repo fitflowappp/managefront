@@ -1,77 +1,78 @@
 /**
  * Created by qwr on 2017/9/15.
  */
-import React, {Component, PropTypes} from 'react'
-import Helmet from "react-helmet"
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
-import {Link, withRouter} from "react-router";
-import {Col, Pagination} from "react-bootstrap"
-import {workoutsActions} from '../actions'
+import React, { Component } from 'react';
+import Helmet from 'react-helmet';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router';
+import { workoutsActions } from '../actions';
 import Alert from '../components/Alert';
+
 class Workouts extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            condition:{
-                sortKey:'id',
-                sortType:1, //1升0降
-            },
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      condition: {
+        sortKey: 'id',
+        sortType: 1, // 1升0降
+      },
+    };
+  }
+  componentDidMount() {
+    let condition = this.props.location.query;
+    if (!condition.sortKey) {
+    // eslint-disable-next-line
+    condition = this.state.condition;
+    } else {
+      this.setState({
+        condition,
+      });
     }
-    componentDidMount() {
-        var condition=this.props.location.query;
-        if(!condition.sortKey){
-            condition=this.state.condition;
-        }else{
+    this.query(condition);
+  }
 
-            this.setState({
-                condition:condition,
-            })
-        }
-        this.query(condition);
-    }
-    componentDidUpdate(prevProps, prevState) {
 
-    }
-    query(condition) {
-        const {queryWorkouts} = this.props;
-        queryWorkouts(condition);
-    }
-    setCondition(sortKey){
-        var condition=this.state.condition;
-        var sortType;
+  setCondition(sortKey) {
+    // eslint-disable-next-line
+    const condition = this.state.condition;
+    let sortType;
 
-        if(sortKey==condition.sortKey){
-            if(condition.sortType==1){
-                sortType=-1;
-            }else{
-                sortType=1;
-            }
-        }else{
-            sortType=1;
-        }
+    if (sortKey === condition.sortKey) {
+      if (condition.sortType === 1) {
+        sortType = -1;
+      } else {
+        sortType = 1;
+      }
+    } else {
+      sortType = 1;
+    }
 
-        condition.sortKey=sortKey;
-        condition.sortType=sortType;
+    condition.sortKey = sortKey;
+    condition.sortType = sortType;
 
-        this.setState(condition);
-        this.query(condition);
-        this.props.router.replace({pathname: this.props.location.pathname, query: condition});
-    }
-    copy(workout){
-        const {copyWorkout} = this.props;
-        const that=this;
-        copyWorkout({id:workout.id,title:workout.title},function (res) {
-            if(res.result.code==1){
-                that.query(that.state.condition);
-            }
-            Alert.info({info:res.result.msg});
-        });
-    }
-    csv(){
-        window.location.href='/api/manage/yoga/workout/csv';
-    }
+    this.setState(condition);
+    this.query(condition);
+    this.props.router.replace({ pathname: this.props.location.pathname, query: condition });
+  }
+  query(condition) {
+    const { queryWorkouts } = this.props;
+    queryWorkouts(condition);
+  }
+  copy(workout) {
+    const { copyWorkout } = this.props;
+    const that = this;
+    copyWorkout({ id: workout.id, title: workout.title }, (res) => {
+      if (res.result.code === 1) {
+        that.query(that.state.condition);
+      }
+      Alert.info({ info: res.result.msg });
+    });
+  }
+  csv() {
+    window.location.href = '/api/manage/yoga/workout/csv';
+  }
+  /* eslint-disable */
     render() {
         const workouts = this.props.workouts.list||[];
         var condition=this.state.condition;
@@ -82,11 +83,11 @@ class Workouts extends Component {
                     <div className="box-header">
                         <h3 className="box-title">Workouts</h3>
                         <div className="box-tools">
-                            <Link to={'/workoutsedit/0'}>
-                                <button type="button"  className="btn  btn-default m-5">Create New Workout</button>
-                            </Link>
                             <Link to={'/singlesOrders'}>
-                                <button type="button"  className="btn  btn-primary m-5">Manage Singles Order</button>
+                            <button type="button"  className="btn btn-default m-5">Manage Singles Order</button>
+                            </Link>
+                            <Link to={'/workoutsedit/0'}>
+                                <button type="button"  className="btn  btn-primary m-5">Create New Workout</button>
                             </Link>
                             <button type="button" className="btn btn-success pull-right m-5" onClick={this.csv.bind(this)}>
                                 <i className="fa fa-download"></i>Export csv
@@ -106,6 +107,9 @@ class Workouts extends Component {
                                 <th className={condition.sortKey=='startedUserCount'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'startedUserCount')}>unique users started</th>
                                 <th className={condition.sortKey=='completedUserCount'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'completedUserCount')}>unique users completed</th>
                                 <th className={condition.sortKey=='totalDuration'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'totalDuration')}>Total duration of being watched</th>
+                                <th className={condition.sortKey=='singled'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'singled')}>Times added to home</th>
+                                <th className={condition.sortKey=='singling'?(condition.sortType==1?"sorting_asc":"sorting_desc"):'sorting'} onClick={this.setCondition.bind(this,'singling')}>Users with this workout on homepage </th>
+
                                 <th >singles</th>
                                 <th></th>
                             </tr>
@@ -121,6 +125,8 @@ class Workouts extends Component {
                                     <td>{workout.completedTimes}</td>
                                     <td>{workout.startedUserCount}</td>
                                     <td>{workout.completedUserCount}</td>
+                                    <td>{workout.totalDuration}</td>
+                                    <td>{workout.totalDuration}</td>
                                     <td>{workout.totalDuration}</td>
                                     <td>{workout.single?'yes':'no'}</td>
                                     <td>
@@ -152,17 +158,19 @@ class Workouts extends Component {
 
             </div>
         )
-    }
+        /* eslint-enable */
+  }
 }
 function mapStateToProps(state) {
-    return {
-        workouts: state.workouts
-    }
+  return {
+    workouts: state.workouts,
+  };
 }
-//将action的所有方法绑定到props上
+// 将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(workoutsActions, dispatch)
+  return bindActionCreators(workoutsActions, dispatch);
 }
 
-//通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Workouts))
+// 通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Workouts));
+

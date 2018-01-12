@@ -3,20 +3,25 @@
  */
 import express from 'express';
 import React from 'react';
-import {renderToString} from 'react-dom/server';
-import {Provider} from 'react-redux';
+import cookie from 'react-cookie';
+import Helmet from 'react-helmet';
+import { RouterContext, match } from 'react-router';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import {RouterContext, match} from 'react-router';
 import routes from './routes';
-import cookie from 'react-cookie'
-import Helmet from 'react-helmet'
-import {port, apiURL} from './config'
+import { port, apiURL } from './config';
 // var proxy = require('http-proxy-middleware');
-var compression = require('compression')
-const server = global.server = express();
-var http = require('http');
-var agent = new http.Agent({maxSockets: Number.MAX_VALUE});
-//api服务器代理 若使用nginx代理接口,fetch配置需要根据客户端和服务端 配置api地址
+
+const compression = require('compression');
+
+const server = express();
+global.server = server;
+
+const http = require('http');
+
+const agent = new http.Agent({ maxSockets: Number.MAX_VALUE });
+// api服务器代理 若使用nginx代理接口,fetch配置需要根据客户端和服务端 配置api地址
 // server.use('/bwm',proxy({target: apiURL, changeOrigin: true}));
 // server.use('/api',proxy({
 //     target: apiURL, // target host
@@ -38,41 +43,41 @@ var agent = new http.Agent({maxSockets: Number.MAX_VALUE});
 //     //     'dev.localhost:3000' : 'http://localhost:8000'
 //     // }
 // }));
-var httpProxy = require('http-proxy');
-var apiProxy = httpProxy.createProxyServer({
-    target: apiURL,
-    ignorePath: false,
-    agent: agent,
-    changeOrigin:true
-    // prependPath: false
-    // {
-    //     host: '101.69.182.82',
-    //     port: 9090
-    // }
-    //target:"http://101.69.182.82:9090",
-    //url = url.replace("/api/","/bwm/manage/");
+const httpProxy = require('http-proxy');
+
+const apiProxy = httpProxy.createProxyServer({
+  target: apiURL,
+  ignorePath: false,
+  agent,
+  changeOrigin: true,
+  // prependPath: false
+  // {
+  //     host: '101.69.182.82',
+  //     port: 9090
+  // }
+  // target:"http://101.69.182.82:9090",
+  // url = url.replace("/api/","/bwm/manage/");
 
 });
 
 
 apiProxy.on('error', (error, req, res) => {
-    let json;
-    if (!res.headersSent) {
-        res.writeHead(500, {'content-type': 'application/json'});
-    }
-    json = {error: 'proxy_error', reason: error.message};
-    res.end(JSON.stringify(json));
+  if (!res.headersSent) {
+    res.writeHead(500, { 'content-type': 'application/json' });
+  }
+  const json = { error: 'proxy_error', reason: error.message };
+  res.end(JSON.stringify(json));
 });
 
-server.all("/api/*", function (req, res) {
-    var url = req.url;
-    url = url.replace("/api/", "/");
-    req.url = url;
-    console.log("url:"+url);
-    apiProxy.web(req, res);
-    // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
+server.all('/api/*', (req, res) => {
+  // eslint-disable-next-line
+  let url = req.url;
+  url = url.replace('/api/', '/');
+  req.url = url;
+  apiProxy.web(req, res);
+  // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });
-/*server.all("/bbs/!*", function (req, res) {
+/* server.all("/bbs/!*", function (req, res) {
     // var url = req.url;
     // url = url.replace("/bbs/", "/bbs/");
     // req.url = url;
@@ -86,35 +91,36 @@ server.all("/front/!*", function (req, res) {
     req.url = url;
     apiProxy.web(req, res);
     // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
-});*/
-server.all("/public/view/*", function (req, res) {
-    // var url = req.url;
-    // url = url.replace("/view/", "/view/");
-    // req.url = url;
-    apiProxy.web(req, res);
-    // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
+}); */
+server.all('/public/view/*', (req, res) => {
+  // var url = req.url;
+  // url = url.replace("/view/", "/view/");
+  // req.url = url;
+  apiProxy.web(req, res);
+  // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });
-server.all("/view/*", function (req, res) {
-    // var url = req.url;
-    // url = url.replace("/view/", "/view/");
-    // req.url = url;
-    apiProxy.web(req, res);
-    // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
+server.all('/view/*', (req, res) => {
+  // var url = req.url;
+  // url = url.replace("/view/", "/view/");
+  // req.url = url;
+  apiProxy.web(req, res);
+  // return httpProxy.web(req, res , { target: "http://another-domain:8000" } );
 });
-if (process.env.NODE_ENV !== "production") {
-    var webpack = require('webpack');
-    var webpackDevMiddleware = require('webpack-dev-middleware');
-    var webpackHotMiddleware = require('webpack-hot-middleware');
-    var config = require('../webpack.dev.config');
-    var compiler = webpack(config);
-    server.use(webpackDevMiddleware(compiler, {
-        noInfo: true, publicPath: config.output.publicPath,
-        watchOptions: {
-            aggregateTimeout: 300,
-            poll: true
-        }
-    }));
-    server.use(webpackHotMiddleware(compiler));
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const config = require('../webpack.dev.config');
+  const compiler = webpack(config);
+  server.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: true,
+    },
+  }));
+  server.use(webpackHotMiddleware(compiler));
 }
 /**
  *  静态文件可使用nginx代理或者直接用node，效率未测试
@@ -133,56 +139,55 @@ if (process.env.NODE_ENV !== "production") {
     }
  */
 server.use(compression());
-server.use('/dist', express.static(__dirname + '/dist'));
+server.use('/dist', express.static(`${__dirname}/dist`));
 
 
 server.use((req, res) => {
-    cookie.setRawCookie(req.headers.cookie);
-    cookie.save = res.cookie;
-    match({routes, location: req.url}, (err, redirectLocation, renderProps) => {
-        if (err) {
-            res.status(500).end(`Internal Server Error ${err}`);
-        } else if (redirectLocation) {
-            res.redirect(redirectLocation.pathname + redirectLocation.search);
-        } else if (renderProps) {
-            const store = configureStore();
-            // const state = store.getState();
-            var arr = [];
-            for (var component of renderProps.components) {
-                if (component && component.serverInit) {
-                    if (component.serverInit instanceof Array) {
-                        arr = arr.concat(component.serverInit)
-                    } else {
-                        arr.push(component.serverInit)
-                    }
-                }
-            }
-            Promise.all(arr.map(function (serverInit) {
-                    if (serverInit instanceof Function)
-                        return store.dispatch(serverInit(renderProps))
-                }))
-                .catch(function (status) {
-                    if (status == 401) {
-                        res.redirect("/login");
-                    }
-                })
-                .then(() => {
-                    const html = renderToString(
-                        <Provider store={store}>
-                            <RouterContext {...renderProps} />
-                        </Provider>
-                    );
-                    let head = Helmet.rewind();
-                    res.end(renderFullPage(html, head, store.getState()));
-                })
-        } else {
-            res.status(404).end('Not found');
+  cookie.setRawCookie(req.headers.cookie);
+  cookie.save = res.cookie;
+  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+    if (err) {
+      res.status(500).end(`Internal Server Error ${err}`);
+    } else if (redirectLocation) {
+      res.redirect(redirectLocation.pathname + redirectLocation.search);
+    } else if (renderProps) {
+      const store = configureStore();
+      // const state = store.getState();
+      let arr = [];
+      for (const component of renderProps.components) {
+        if (component && component.serverInit) {
+          if (component.serverInit instanceof Array) {
+            arr = arr.concat(component.serverInit);
+          } else {
+            arr.push(component.serverInit);
+          }
         }
-    });
+      }
+      Promise.all(arr.map((serverInit) => {
+        if (serverInit instanceof Function) {
+          return store.dispatch(serverInit(renderProps));
+        }
+      }))
+        .catch((status) => {
+          if (status == 401) {
+            res.redirect('/login');
+          }
+        })
+        .then(() => {
+          const html = renderToString(<Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>);
+          const head = Helmet.rewind();
+          res.end(renderFullPage(html, head, store.getState()));
+        });
+    } else {
+      res.status(404).end('Not found');
+    }
+  });
 });
 
 function renderFullPage(html, head, initialState) {
-    return `
+  return `
     <!DOCTYPE html>
     <html>
     <head>
@@ -221,9 +226,9 @@ function renderFullPage(html, head, initialState) {
 
 // This is fired every time the server side receives a request
 server.listen(port, (error) => {
-    if (error) {
-        console.error(error)
-    } else {
-        //console.info(`==>  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`)
-    }
+  if (error) {
+    console.error(error);
+  } else {
+    // console.info(`==>  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`)
+  }
 });

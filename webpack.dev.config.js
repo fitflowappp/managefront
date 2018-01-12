@@ -18,10 +18,10 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'src/dist'),
         filename: 'bundle.js',
-        publicPath: 'http://localhost:3000/dist/'
+        publicPath: '/dist/'
     },
     plugins: [
-        new webpack.SourceMapDevToolPlugin(),
+        // new webpack.SourceMapDevToolPlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
