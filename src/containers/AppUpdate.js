@@ -19,6 +19,8 @@ class AppUpdate extends Component {
       forceUpdate:{},
       success:false,
       system:1,
+      updateComponentAble:false,
+      forceUpdateComponentAble:false,
     };
   }
   componentDidMount() {
@@ -29,10 +31,23 @@ class AppUpdate extends Component {
     const that = this;
     const system=1;//ios
     queryAppUpdate({system:''+system} , (res) => { 
+      let updateComponentAble=false;
+      let forceUpdateComponentAble=false;
+      if( res && res.setting ){
+        if(res.setting.update&&res.setting.update.build>0){
+          updateComponentAble=true;
+        }
+        if(res.setting.force&&(res.setting.force.build>0)){
+          forceUpdateComponentAble=true;
+        }
+      }
+      
       that.setState({
         versionList:res.versions,
         update:res.setting?(res.setting.update?res.setting.update:{}):{},
         forceUpdate:res.setting?(res.setting.force?res.setting.force: {}):{},
+        forceUpdateComponentAble:forceUpdateComponentAble,
+        updateComponentAble:updateComponentAble,
       });
      });
   
@@ -55,6 +70,14 @@ class AppUpdate extends Component {
     this.setState({forceUpdate: update});
 
   }
+  handleNormalUpdateDiable(){
+    console.log("handleNormalUpdateDiable");
+    this.setState({updateComponentAble:!(this.state.updateComponentAble)});
+  }
+  handleForceUpdateDiable(){
+    console.log("handleForceUpdateDiable");
+    this.setState({forceUpdateComponentAble:!(this.state.forceUpdateComponentAble)});
+  }
   save(){
 
     const update=this.state.update;
@@ -66,9 +89,11 @@ class AppUpdate extends Component {
     const { uploadAppUpdate } = this.props;
     let updateSetting={};
     const system=this.state.system;
-
-    updateSetting['update']=update;
-    updateSetting['force']=forceUpdate;
+    if((this.state.updateComponentAble)){
+      updateSetting['update']=update;
+    }
+    if((this.state.forceUpdateComponentAble))
+      updateSetting['force']=forceUpdate;
     updateSetting['system']=system;
     const that=this;
 
@@ -87,20 +112,21 @@ class AppUpdate extends Component {
     var success=this.state.success;
     var updateSetting=this.state.update;
     var forceUpdateSetting=this.state.forceUpdate;
-    console.log(versions);
     return (
       <div>
       <Helmet title="app update"/>
-      {success&&<div className="callout callout-success text-center">your update settting have been succesfully saved</div>}
+      {success&&<div className="callout callout-success text-center">Changes successful</div>}
         <div className="box">
                  
           <div className="box-body">
           <Col lg={10}>
           <label className="font-20">Choose app versions for upgrade and forced upgrade notifications</label>
           </Col>
-          <Row className="m-l5 m-box-shadow m-r5"  >
+          <Row className="m-l5 m-box-shadow m-r5" ref={(m)=>{this.updateDiv=m}} >
           <Col lg={10} className="m-t5">
-          <label className="font-16">Regular Upgrade Notification Version</label>
+            <input type="checkbox" className="m-b5" style={{width:'30px'}} checked={!(this.state.updateComponentAble)}  required={true} placeholder="" onChange={this.handleNormalUpdateDiable.bind(this)} />
+
+            <label className="font-16">Regular Upgrade Notification Version</label>
             <label className="font-10" >Users with app installs equal to or earlier than this version will receive a notification to upgrade to the latest version.</label>
           </Col>
           
@@ -110,6 +136,7 @@ class AppUpdate extends Component {
             name="build"
             value={updateSetting?(updateSetting.build?updateSetting.build:0):0}
             onChange={this.handleNormalChangle.bind(this)}
+            disabled={!(this.state.updateComponentAble)}
             >
             <option value={0}>closed</option>
 
@@ -125,22 +152,26 @@ class AppUpdate extends Component {
             <label className="font-20">Update Message</label>
           </Col>
           <Col lg={10}>
-           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} required placeholder="" value={updateSetting?updateSetting.desc:""} name="desc" onChange={this.handleNormalChangle.bind(this)} />
+           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }}   disabled={!(this.state.updateComponentAble)}  required placeholder="" value={updateSetting?updateSetting.desc:""} name="desc" onChange={this.handleNormalChangle.bind(this)} />
           </Col>
           </Row>
           
-          <Row className="m-l5 m-box-shadow m-r5 m-t20"  >
+          <Row className="m-l5 m-box-shadow m-r5 m-t20" ref={(m)=>{this.forceUpdateDiv=m} }>
+          
+          <Col lg={9} className="m-t5">
+            <input type="checkbox" className="m-b5" style={{width:'30px'}}  checked={!(this.state.forceUpdateComponentAble)}  required={true} placeholder="" onChange={this.handleForceUpdateDiable.bind(this)} />
+            <label className="font-16">Forced Update Notification</label>
+          </Col>
           <Col lg={10} className="m-t5">
-          <label className="font-16">Forced Update Notification</label>
             <label className="font-10" >Users with app installs equal to or earlier than this version will receive a notification forcing them to update to the latest version. Please choose a version that is earlier than the one above.</label>
           </Col>
-          
           <Col lg={10}  style={{height:'40px'}}>
           <select 
             style={{width:'50%'}}
             name="build"
             onChange={this.handleForceUpdateChangle.bind(this)}
             value={forceUpdateSetting?(forceUpdateSetting.build?forceUpdateSetting.build:0):0}
+            disabled={!(this.state.forceUpdateComponentAble)}
             >
             <option value={0}>closed</option>
 
@@ -156,7 +187,7 @@ class AppUpdate extends Component {
             <label className="font-20">Forced Update Message</label>
           </Col>
           <Col lg={10}>
-           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} required placeholder="" value={forceUpdateSetting?forceUpdateSetting.desc:""} name="desc"  onChange={this.handleForceUpdateChangle.bind(this)}           />
+           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} disabled={!(this.state.forceUpdateComponentAble)} required placeholder="" value={forceUpdateSetting?forceUpdateSetting.desc:""} name="desc"  onChange={this.handleForceUpdateChangle.bind(this)}           />
           </Col>
           </Row>
           </div>
