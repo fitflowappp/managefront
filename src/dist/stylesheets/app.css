@@ -26,6 +26,9 @@ body {
   font-family: 'mht';
   src: url("/src/images/font/mht.ttf");
 }
+.font-10{
+  font-size: 10px;
+}
 /* line 25, ../../sass/common.scss */
 .font-16 {
   font-size: 16px;
@@ -521,7 +524,10 @@ input[type="range"] {
   border: 0;
   outline: none;
 }
-
+/* line 55, ../../sass/common.scss */
+.m-box-shadow{
+  box-shadow: 1px 1px 1px 1px rgb(3, 0, 0);
+}
 /* line 59, ../../sass/common.scss */
 .pointer {
   cursor: pointer;
@@ -594,3 +600,7 @@ a:hover, a:visited {
   height: 60px;
   line-height: 60px;
 }
+.width50{
+  width:50%
+}
+

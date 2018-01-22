@@ -5,3 +5,5 @@ node_modules/
 .vscode
 publish
 .DS_Store
+bundle.js.map
+bundle.js

@@ -51,6 +51,7 @@ class Dashboard extends Component {
     csv(){
         window.location.href='/api/manage/yoga/dashboard/csv';
     }
+    
     render() {
         const dashboards = this.props.dashboard.list||[];
         const condition=this.state.condition;
@@ -95,7 +96,7 @@ class Dashboard extends Component {
                                 <td>{dashboard.workoutCompleteNum}</td>
                                 <td>{dashboard.oneWorkoutCompleteUserNum}</td>
                                 <td>{dashboard.totalDuration}</td>
-                                <td>{dashboard.calReminderOnNum}</td>
+                                <td>{dashboard.calReminderOnNum+dashboard.notificationOnNum}</td>
                                 <td>{dashboard.achievementNum}</td>
                                 <td>{dashboard.shareNum}</td>
                             </tr>

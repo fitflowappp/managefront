@@ -54,6 +54,7 @@ resource(
   'Workouts', '/api/manage/yoga/workout/:id', [],
   {
     actions: [
+      ['getWorkoutStatistiscs', 'get', '/api/manage/yoga/statistiscs/workout'],
       ['copyWorkout', 'put', '/api/manage/yoga/workout/:id/copy/:title', 'risk'],
     ],
   },
@@ -81,6 +82,15 @@ resource(
       ['updateSinglesSort', 'post', '/api/manage/yoga/singles/:id/sort/:sort'],
       ['addSinglesWorkout', 'post', '/api/manage/yoga/singles/addSingles/:id'],
       ['saveSinglesOrders', 'post', '/api/manage/yoga/singles/orders'],
+
+    ],
+  },
+);
+resource(
+  'AppUpdate', '/api/user/version/backgroud/:system', [],
+  {
+    actions: [
+      ['uploadAppUpdate', 'put', '/api/user/version/backgroud/set'],
 
     ],
   },

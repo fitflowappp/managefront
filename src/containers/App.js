@@ -90,6 +90,11 @@ class App extends Component {
                                        <span>milestones</span>
                                    </Link>
                                </li>
+                               <li className={pathname=='update'?"active":""}>
+                                   <Link to="/update">
+                                       <span>app update</span>
+                                   </Link>
+                               </li>
                            </ul>
                        </section>
                    </aside>
