@@ -14,13 +14,13 @@ class AppUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      versionList:[],
-      update:{},
-      forceUpdate:{},
-      success:false,
-      system:1,
-      updateComponentAble:false,
-      forceUpdateComponentAble:false,
+      versionList: [],
+      update: {},
+      forceUpdate: {},
+      success: false,
+      system: 1,
+      updateComponentAble: false,
+      forceUpdateComponentAble: false,
     };
   }
   componentDidMount() {
@@ -29,78 +29,87 @@ class AppUpdate extends Component {
   query() {
     const { queryAppUpdate } = this.props;
     const that = this;
-    const system=1;//ios
-    queryAppUpdate({system:''+system} , (res) => { 
-      let updateComponentAble=false;
-      let forceUpdateComponentAble=false;
-      if( res && res.setting ){
-        if(res.setting.update&&res.setting.update.build>0){
-          updateComponentAble=true;
+    const system = 1;// ios
+    queryAppUpdate({ system: `${system}` }, (res) => {
+      let updateComponentAble = false;
+      let forceUpdateComponentAble = false;
+      let update = {};
+      let forceUpdate = {};
+      if (res && res.setting) {
+        if (res.setting.update && res.setting.update.build > 0) {
+          updateComponentAble = true;
         }
-        if(res.setting.force&&(res.setting.force.build>0)){
-          forceUpdateComponentAble=true;
+        if (res.setting.force && res.setting.force.build > 0) {
+          forceUpdateComponentAble = true;
         }
+        if (res.setting.update) {
+          update = res.setting.update;
+        }
+
+        if (res.setting.force) {
+          forceUpdate = res.setting.force;
+        }
+
       }
-      
       that.setState({
-        versionList:res.versions,
-        update:res.setting?(res.setting.update?res.setting.update:{}):{},
-        forceUpdate:res.setting?(res.setting.force?res.setting.force: {}):{},
-        forceUpdateComponentAble:forceUpdateComponentAble,
-        updateComponentAble:updateComponentAble,
+        versionList: res.versions,
+        update,
+        forceUpdate,
+        forceUpdateComponentAble,
+        updateComponentAble,
       });
-     });
-  
+    });
   }
-  handleNormalChangle(e){
+  handleNormalChangle(e) {
+    // eslint-disable-next-line
     const target = e.target;
     const name = target.name;
-    let value = e.target.value;
-    let normalUpdate = this.state.update;
-    normalUpdate[name]=value;
-    console.log(name+":"+value);
-    this.setState({update: normalUpdate});
+    const value = e.target.value;
+    const normalUpdate = this.state.update;
+    normalUpdate[name] = value;
+    this.setState({ update: normalUpdate });
   }
-  handleForceUpdateChangle(e){
+  handleForceUpdateChangle(e) {
     const target = e.target;
     const name = target.name;
-    let value = e.target.value;
-    let update = this.state.forceUpdate;
-    update[name]=value;
-    this.setState({forceUpdate: update});
-
+    const value = e.target.value;
+    const update = this.state.forceUpdate;
+    update[name] = value;
+    this.setState({ forceUpdate: update });
   }
-  handleNormalUpdateDiable(){
-    console.log("handleNormalUpdateDiable");
-    this.setState({updateComponentAble:!(this.state.updateComponentAble)});
+  handleNormalUpdateDiable() {
+    this.setState({ updateComponentAble: !(this.state.updateComponentAble) });
   }
-  handleForceUpdateDiable(){
-    console.log("handleForceUpdateDiable");
-    this.setState({forceUpdateComponentAble:!(this.state.forceUpdateComponentAble)});
+  handleForceUpdateDiable() {
+    this.setState({ forceUpdateComponentAble: !(this.state.forceUpdateComponentAble) });
   }
-  save(){
-
-    const update=this.state.update;
-    const forceUpdate=this.state.forceUpdate;
-    if( update && forceUpdate && update.build<=forceUpdate.build ){
-      Alert.info({info:"normal update version must less than force update"});
-      return;
+  save() {
+    const update = this.state.update;
+    const forceUpdate = this.state.forceUpdate;
+    const forceUpdateComponentAble = this.state.forceUpdateComponentAble;
+    const updateComponentAble = this.state.updateComponentAble;
+    if (updateComponentAble && forceUpdateComponentAble) {
+      if (update && forceUpdate && update.build <= forceUpdate.build) {
+        Alert.alert({
+          title: 'error',
+          body: 'The Forced Upgrade Notifications Version you have chosen is equal to or larger than the Regular Upgrade Notification Version. This way, users will not see the Regular Upgrade Notification. Please check the settings before you continue.'
+        });
+        return;
+      }
     }
     const { uploadAppUpdate } = this.props;
-    let updateSetting={};
-    const system=this.state.system;
-    if((this.state.updateComponentAble)){
-      updateSetting['update']=update;
+    const updateSetting = {};
+    const system = this.state.system;
+    if ((this.state.updateComponentAble)) {
+      updateSetting.update = update;
     }
-    if((this.state.forceUpdateComponentAble))
-      updateSetting['force']=forceUpdate;
-    updateSetting['system']=system;
-    const that=this;
+    if ((this.state.forceUpdateComponentAble)) { updateSetting.force = forceUpdate; }
+    updateSetting.system = system;
+    const that = this;
 
-    console.log(updateSetting);
-    uploadAppUpdate(updateSetting,()=>{
-      that.setState({success:true});
-    })
+    uploadAppUpdate(updateSetting, () => {
+      that.setState({ success: true });
+    });
   }
 
   back() {
@@ -124,7 +133,7 @@ class AppUpdate extends Component {
           </Col>
           <Row className="m-l5 m-box-shadow m-r5" ref={(m)=>{this.updateDiv=m}} >
           <Col lg={10} className="m-t5">
-            <input type="checkbox" className="m-b5" style={{width:'30px'}} checked={!(this.state.updateComponentAble)}  required={true} placeholder="" onChange={this.handleNormalUpdateDiable.bind(this)} />
+            <input type="checkbox" className="m-b5" style={{width:'30px'}} checked={(this.state.updateComponentAble)}  required={true} placeholder="" onChange={this.handleNormalUpdateDiable.bind(this)} />
 
             <label className="font-16">Regular Upgrade Notification Version</label>
             <label className="font-10" >Users with app installs equal to or earlier than this version will receive a notification to upgrade to the latest version.</label>
@@ -159,7 +168,7 @@ class AppUpdate extends Component {
           <Row className="m-l5 m-box-shadow m-r5 m-t20" ref={(m)=>{this.forceUpdateDiv=m} }>
           
           <Col lg={9} className="m-t5">
-            <input type="checkbox" className="m-b5" style={{width:'30px'}}  checked={!(this.state.forceUpdateComponentAble)}  required={true} placeholder="" onChange={this.handleForceUpdateDiable.bind(this)} />
+            <input type="checkbox" className="m-b5" style={{width:'30px'}}  checked={(this.state.forceUpdateComponentAble)}  required={true} placeholder="" onChange={this.handleForceUpdateDiable.bind(this)} />
             <label className="font-16">Forced Update Notification</label>
           </Col>
           <Col lg={10} className="m-t5">
