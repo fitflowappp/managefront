@@ -44,10 +44,18 @@ class AppUpdate extends Component {
         }
         if (res.setting.update) {
           update = res.setting.update;
+        }else{
+          if(res.versions){
+            update['build']=res.versions[0].build;
+          }
         }
 
         if (res.setting.force) {
           forceUpdate = res.setting.force;
+        }else{
+          if(res.versions){
+            forceUpdate['build']=res.versions[0].build;
+          }
         }
 
       }
@@ -60,21 +68,53 @@ class AppUpdate extends Component {
       });
     });
   }
-  handleNormalChangle(e) {
+  checkTextareaValue(value){
+    if(value.length>300){
+      Alert.alert({
+        title:"error",
+        body:'Please limit the message to within 300 characters'
+      }
+      )
+      return false;
+    }
+    let relpaceStr=value.replace(/\n/g,'');
+    let count=value.length-relpaceStr.length;
+    if(count>=5){
+      Alert.alert({
+        title:"error",
+        body:'Please limit the message to within 5 lines of text'
+      }
+      )
+      return false;
+    }
+    return true;
+  }
+  handleNormalChange(e) {
     // eslint-disable-next-line
     const target = e.target;
     const name = target.name;
     const value = e.target.value;
-    const normalUpdate = this.state.update;
+    let normalUpdate = this.state.update;
     normalUpdate[name] = value;
+    if( name === 'desc'){
+      if( this.checkTextareaValue(value) === false ){
+        return;
+      }
+    }
     this.setState({ update: normalUpdate });
   }
-  handleForceUpdateChangle(e) {
+  handleForceUpdateChange(e) {
     const target = e.target;
     const name = target.name;
     const value = e.target.value;
-    const update = this.state.forceUpdate;
+    let update = this.state.forceUpdate;
     update[name] = value;
+    if( name === 'desc'){
+      if( this.checkTextareaValue(value) === false){
+        return;
+      }
+    }
+    console.log(update);
     this.setState({ forceUpdate: update });
   }
   handleNormalUpdateDiable() {
@@ -88,11 +128,16 @@ class AppUpdate extends Component {
     const forceUpdate = this.state.forceUpdate;
     const forceUpdateComponentAble = this.state.forceUpdateComponentAble;
     const updateComponentAble = this.state.updateComponentAble;
+    
+
     if (updateComponentAble && forceUpdateComponentAble) {
-      if (update && forceUpdate && update.build <= forceUpdate.build) {
+      let updateBuild=new Number(update.build);
+      let forceUpdateBuild=new Number(forceUpdate.build);
+      if (update && forceUpdate && (updateBuild <= forceUpdateBuild)) {
+
         Alert.alert({
           title: 'error',
-          body: 'The Forced Upgrade Notifications Version you have chosen is equal to or larger than the Regular Upgrade Notification Version. This way, users will not see the Regular Upgrade Notification. Please check the settings before you continue.'
+          body: 'The Forced Upgrade Notifications Version you have chosen is equal to or larger than the Regular Upgrade Notification Version. This way, users will not see the Regular Upgrade Notification. Please check the settings before you continue.',
         });
         return;
       }
@@ -101,9 +146,26 @@ class AppUpdate extends Component {
     const updateSetting = {};
     const system = this.state.system;
     if ((this.state.updateComponentAble)) {
+      if(!(update.build) ||update.build<=0){
+        Alert.alert({
+          title:'error',
+          body:'please select app version'
+        });
+        return
+      }
       updateSetting.update = update;
     }
-    if ((this.state.forceUpdateComponentAble)) { updateSetting.force = forceUpdate; }
+    if ((this.state.forceUpdateComponentAble)) { 
+      console.log('forceUpdate.build:'+forceUpdate.build);
+      if( !(forceUpdate.build) ||forceUpdate.build<=0){
+        Alert.alert({
+          title:'error',
+          body:'please select force update\'s app version'
+        });
+        return
+      }
+      updateSetting.force = forceUpdate; 
+    }
     updateSetting.system = system;
     const that = this;
 
@@ -121,6 +183,7 @@ class AppUpdate extends Component {
     var success=this.state.success;
     var updateSetting=this.state.update;
     var forceUpdateSetting=this.state.forceUpdate;
+    console.log(forceUpdateSetting);
     return (
       <div>
       <Helmet title="app update"/>
@@ -135,20 +198,19 @@ class AppUpdate extends Component {
           <Col lg={10} className="m-t5">
             <input type="checkbox" className="m-b5" style={{width:'30px'}} checked={(this.state.updateComponentAble)}  required={true} placeholder="" onChange={this.handleNormalUpdateDiable.bind(this)} />
 
-            <label className="font-16">Regular Upgrade Notification Version</label>
-            <label className="font-10" >Users with app installs equal to or earlier than this version will receive a notification to upgrade to the latest version.</label>
+            <label className="font-16">Regular Upgrade Notification</label>
           </Col>
-          
+          <Col lg={10} className="m-t5">
+              <label className="font-10" >Users with app installs equal to or earlier than this version will receive a notification to upgrade to the latest version.</label>
+          </Col>
           <Col lg={10}  style={{height:'40px'}}>
           <select 
             style={{width:'50%'}}
             name="build"
             value={updateSetting?(updateSetting.build?updateSetting.build:0):0}
-            onChange={this.handleNormalChangle.bind(this)}
+            onChange={this.handleNormalChange.bind(this)}
             disabled={!(this.state.updateComponentAble)}
             >
-            <option value={0}>closed</option>
-
             {
               versions.map(function(version,index){
               
@@ -161,7 +223,7 @@ class AppUpdate extends Component {
             <label className="font-20">Update Message</label>
           </Col>
           <Col lg={10}>
-           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }}   disabled={!(this.state.updateComponentAble)}  required placeholder="" value={updateSetting?updateSetting.desc:""} name="desc" onChange={this.handleNormalChangle.bind(this)} />
+           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} cols='5'  disabled={!(this.state.updateComponentAble)}  required placeholder="" value={updateSetting?updateSetting.desc:""} name="desc" onChange={this.handleNormalChange.bind(this)} />
           </Col>
           </Row>
           
@@ -178,12 +240,10 @@ class AppUpdate extends Component {
           <select 
             style={{width:'50%'}}
             name="build"
-            onChange={this.handleForceUpdateChangle.bind(this)}
+            onChange={this.handleForceUpdateChange.bind(this)}
             value={forceUpdateSetting?(forceUpdateSetting.build?forceUpdateSetting.build:0):0}
             disabled={!(this.state.forceUpdateComponentAble)}
             >
-            <option value={0}>closed</option>
-
             {
               versions.map((version,index)=> 
               <option key={'force'+index} value={version.build} >{version.version}</option>
@@ -196,7 +256,7 @@ class AppUpdate extends Component {
             <label className="font-20">Forced Update Message</label>
           </Col>
           <Col lg={10}>
-           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} disabled={!(this.state.forceUpdateComponentAble)} required placeholder="" value={forceUpdateSetting?forceUpdateSetting.desc:""} name="desc"  onChange={this.handleForceUpdateChangle.bind(this)}           />
+           <textarea type="text" className="form-control m-b10" style={{ maxWidth: '615px',height:'120px' }} disabled={!(this.state.forceUpdateComponentAble)} required placeholder="" value={forceUpdateSetting?forceUpdateSetting.desc:""} name="desc"  onChange={this.handleForceUpdateChange.bind(this)}           />
           </Col>
           </Row>
           </div>
