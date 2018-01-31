@@ -49,9 +49,13 @@ class SinglesOrder extends Component {
     const singlesOrderList = this.state.singlesOrders;
     const updateSinglesIdList = [];
     let workout = {};
+    let singlesItem = {};
     for (let i = 0; i < singlesOrderList.length; i += 1) {
       workout = singlesOrderList[i];
-      updateSinglesIdList.push(workout.id);
+      singlesItem = {};
+      singlesItem.singlesId = workout.id;
+      singlesItem.singlesLock = workout.singlesLock;
+      updateSinglesIdList.push(singlesItem);
     }
     const { saveSinglesOrders } = this.props;
     const that = this;
@@ -75,6 +79,13 @@ class SinglesOrder extends Component {
       this.setState({ singlesOrders });
     }
   }
+  lockSingles(index) {
+    const singlesOrders = this.state.singlesOrders;
+    const singles = singlesOrders[index];
+    singles.singlesLock = !singles.singlesLock;
+    singlesOrders[index] = singles;
+    this.setState({ singlesOrders });
+  }
   // 删除routines
   delSingles(index) {
     const that = this;
@@ -95,6 +106,7 @@ class SinglesOrder extends Component {
   /* eslint-disable */
   render() {
     const singlesOrders = this.state.singlesOrders;
+    console.log(singlesOrders);
     var success=this.state.success;
     return (
       <div>
@@ -103,22 +115,46 @@ class SinglesOrder extends Component {
         {success&&<div className="callout callout-success text-center">Your singlesOrders have been succesfully saved</div>}
         <div className="box">
           <div className="box-body">
-
-            <Row>
+          <Row>
               <Col lg={3} className="m-t10">
                 <label className="m-t5">singles Orders:</label>
               </Col>
-              <Col lg={9} className="m-t5">
-                {singlesOrders.map((singles, index) =>
-                                      (<div key={index} className="m-b5">
-                                        <i onClick={this.upSingles.bind(this, index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{ fontSize: '20px' }} />
-                                        <text className="m-r5">{singles.code}:</text>{singles.title}
-                                        <i onClick={this.delSingles.bind(this, index)} className="fa fa-close text-danger pointer m-l10" style={{ fontSize: '20px' }} />
-                                       </div>))}
-                <i onClick={this.openWorkoutsListModal.bind(this)} className="fa fa-plus-square text-primary pointer" style={{ fontSize: '40px' }} />
-
-              </Col>
-            </Row>
+          </Row>
+          <table  className="table table-bordered dataTable">
+          <thead>
+          <tr role="row">
+            <th >id </th> 
+            <th >order </th> 
+            <th >singles title </th> 
+            <th >delete single </th> 
+            <th >lock single </th> 
+          </tr>
+          </thead>
+          <tbody>
+          {singlesOrders.map((workout, index) =>
+              <tr key={index}>
+                  <td>{workout.id}</td>
+                  <td><i onClick={this.upSingles.bind(this, index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{ fontSize: '20px' }} /></td>
+                  <td><text className="m-r5">{workout.code}:</text>{workout.title}</td>
+                  <td><i onClick={this.delSingles.bind(this, index)} className="fa fa-close text-danger pointer m-l10" style={{ fontSize: '20px' }} /></td>
+                  
+                  <td>
+                  <Col lg={12}>
+                    <div className="checkbox">
+                   <label>
+                       <input type="checkbox" name="display" checked={workout.singlesLock} onChange={this.lockSingles.bind(this,index)} /></label>
+                  </div>
+                  </Col>
+                </td>
+              </tr>
+          )}
+          </tbody>
+          </table>
+          <Row>
+            <Col lg={9} className="m-t5">
+              <i onClick={this.openWorkoutsListModal.bind(this)} className="fa fa-plus-square text-primary pointer" style={{ fontSize: '40px' }} />
+            </Col>
+          </Row>
           </div>
 
           <div className="box-footer clearfix">

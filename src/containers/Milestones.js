@@ -89,11 +89,11 @@ class Milestones extends Component {
                                 <p>Exercise Minutes</p>
                                 <p>Users will receive an achievement after every how many total exercise minutes?</p>
                                 <Row style={{maxWidth:'600px'}}>
-                                    <Col sm={2} className="m-t5"><text>30</text></Col>
+                                    <Col sm={2} className="m-t5"><text>2</text></Col>
                                     <Col sm={8} className="m-t5">
-                                        <input type="range" min="30" max="300" name="achievementMinutes"   value={milestone.achievementMinutes} step={1} onChange={this.set.bind(this)}/>
+                                        <input type="range" min="2" max="100" name="achievementMinutes"   value={milestone.achievementMinutes} step={1} onChange={this.set.bind(this)}/>
                                     </Col>
-                                    <Col sm={2} className="m-t5"><text>300</text></Col>
+                                    <Col sm={2} className="m-t5"><text>100</text></Col>
                                     <Col sm={12}><p className="text-center text-primary">{milestone.achievementMinutes}</p></Col>
                                     <Col sm={12} className="m-t5">
                                         <label  className="m-t5">Pop-up box message for exercise minutes milestone:</label>
