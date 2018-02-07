@@ -85,6 +85,11 @@ class App extends Component {
                                        <span>users</span>
                                    </Link>
                                </li>
+                               <li className={pathname=='topic'?"active":""}>
+                                   <Link to="/topic">
+                                       <span>onboard</span>
+                                   </Link>
+                               </li>
                                <li className={pathname=='milestones'?"active":""}>
                                    <Link to="/milestones">
                                        <span>milestones</span>

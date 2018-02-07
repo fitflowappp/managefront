@@ -22,6 +22,8 @@ import UserDetails from './containers/UserDetails';
 import Milestones from './containers/Milestones';
 import { getMuser } from './common/auth';
 import AppUpdate from './containers/AppUpdate';
+import Topic from './containers/Topic';
+import TopicEdit from './containers/TopicEdit';
 
 
 function requireAuth(nextState, replace) {
@@ -65,6 +67,9 @@ const routes = (
     <Route path="milestones" component={Milestones} name="milestones" onEnter={requireAuth} />
     <Route path="singlesOrders" component={SinglesOrders} name="singlesOrders" onEnter={requireAuth} />
     <Route path="update" component={AppUpdate} name="appUpdate" onEnter={requireAuth} />
+    <Route path="topic" component={Topic} name="topic" onEnter={requireAuth} />
+    <Route path="topic/:id" component={TopicEdit} name="topic" onEnter={requireAuth} />
+
     </Route>
 );
 export default routes;

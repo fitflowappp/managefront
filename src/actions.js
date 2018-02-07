@@ -10,6 +10,12 @@ function resource(name, url, keys = [], option = {}) {
   reducerObject[name.toLowerCase()] = reducerFactory(name, reducerOption);
   exports[`${name.toLowerCase()}Actions`] = { ...actionFactory(name, url, keys, actionOption) };
 }
+function exportAction(name, url, keys = [], option = {}) {
+  const actionOption = option.actions ? option.actions : {};
+  const reducerOption = option.reducers;
+  exports.reducers[name.toLowerCase()] = reducerFactory(name, reducerOption);
+  exports[`${name.toLowerCase()}Actions`] = { ...actionFactory(name, url, keys, actionOption) };
+}
 resource(
   'Account', '/api/user', [],
   {
@@ -87,6 +93,16 @@ resource(
   },
 );
 resource(
+  'topic', '/api/manage/yoga/topic', [],
+  {
+    actions: [
+      ['getTopicDetail','get','/api/manage/yoga/topic/:id'],
+      ['deleteTopic','delete','/api/manage/yoga/topic/:id'],
+      ['sortTopic','post','/api/manage/yoga/topic/sort'],
+    ],
+  },
+);
+resource(
   'AppUpdate', '/api/user/version/backgroud/:system', [],
   {
     actions: [
@@ -95,6 +111,7 @@ resource(
     ],
   },
 );
+
 resource(
   'MileStones', '/api/manage/yoga/milestone/:id', [],
   {
