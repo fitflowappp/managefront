@@ -46,12 +46,16 @@ class Topic extends Component {
     }
   }
   deleteTopic(index) {
-    const that = this;
-    
-    if (this.state.topic.length === 1){
-      Alert.alert({title:'Warn',body:"your topics must more than 1." });
+    const topicItem=this.state.topic[index];
+    if( topicItem.default ){
+      Alert.alert({title:'Warn',body:"The default theme cannot be deleted. Please choose another theme to be the default first if you want to delete this theme." });
       return;
     }
+    if (this.state.topic.length === 1){
+      Alert.alert({title:'Warn',body:"your theme must more than 1." });
+      return;
+    }
+    const that = this;
     Alert.confirm({
       title: 'delete',
       body: 'confirm？',
@@ -72,6 +76,22 @@ class Topic extends Component {
     }, 2000);
 
   }
+  handleSelectDefaultTopic(index){
+    const topics=this.state.topic;
+    let topicItem=topics[index];
+    if( !(topicItem.default) ){
+      let item={};
+      for(var i=0;i<topics.length;i++){
+        item=topics[i];
+        if(i===index){
+          item.default=true;
+        }else{
+          item.default=false;
+        }
+      }
+      this.setState({topic:topics});
+    }
+  }
   save(){
     const topics=this.state.topic;
     let sortList=[];
@@ -81,8 +101,10 @@ class Topic extends Component {
       var sort={};
       sort['id']=topic.id;
       sort['sort']=i;
+      sort['selectDefault']=topic.default;
       sortList.push(sort);
     }
+    console.log(sortList);
     const that =this;
     const { sortTopic } = this.props;
     sortTopic(sortList, (res) => {
@@ -104,32 +126,33 @@ class Topic extends Component {
     const success=this.state.success;
     return (
       <div>
-        <Helmet title="topic" />
+        <Helmet title="Theme" />
          <div className="box">
-         {success && <div className="callout callout-success text-center">Your topic have been succesfully saved</div>}
+         {success && <div className="callout callout-success text-center">Your Theme have been succesfully saved</div>}
 
          <div className="box-header">
-                        <h3 className="box-title">topic</h3>
+                        <h3 className="box-title">Theme</h3>
                         <div className="box-tools">
                             <Link to={'/topic/0'}>
-                                <button type="button" className="btn  btn-primary m-5" disabled={topicsSize>3?true:false}>Create New Topic { console.log('topic size:'+topicsSize)}</button>
+                                <button type="button" className="btn  btn-primary m-5" disabled={topicsSize>3?true:false}>Create New Theme</button>
                             </Link> 
                         </div>
                     </div>
           <div className="box-body">
           <Row>
               <Col lg={3} className="m-t10">
-                <label className="m-t5">topic List:</label>
+                <label className="m-t5">Theme List:</label>
               </Col>
           </Row>
           <table  className="table table-bordered dataTable">
           <thead>
           <tr role="row">
-            <th >id </th>
-            <th >title </th> 
-            <th >challenges code and title</th> 
+            <th >Id </th>
+            <th >Title </th> 
+            <th >Challenges Code and Title</th> 
             <th >sort</th> 
-            <th >delete topic</th> 
+            <th >Default Theme</th>
+            <th >Delete Theme</th> 
           </tr>
           </thead>
           <tbody>
@@ -140,6 +163,7 @@ class Topic extends Component {
                   <td>{topic.title}</td>
                   <td>{challenge?(challenge.code+':'+challenge.title):''}</td>
                   <td><i onClick={this.upTopic.bind(this, index)} className="fa fa-arrow-up text-primary pointer m-r10" style={{ fontSize: '20px' }} /></td>
+                  <td><input type="radio" checked={topic?topic.default:false} onChange={this.handleSelectDefaultTopic.bind(this,index)} /> </td>
                   <td><button type="button" className="btn  btn-primary" onClick={this.deleteTopic.bind(this,index)}>delete</button></td>
                   </tr>)
           },this

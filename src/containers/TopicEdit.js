@@ -26,12 +26,6 @@ class TopicEdit extends Component {
   componentDidMount() {
     this.query();
   }
-  query() {
-    const id = this.props.routeParams.id;
-    const { getTopicDetail } = this.props;
-    const that = this;
-    getTopicDetail({ id }, (res) => { that.setState({ topic: res }); });
-  }
   setTopic(e) {
     const target = e.target;
     const name = target.getAttribute('name');
@@ -40,18 +34,35 @@ class TopicEdit extends Component {
     topic[name] = value;
     this.setState(topic);
   }
+  query() {
+    const id = this.props.routeParams.id;
+    const { getTopicDetail } = this.props;
+    const that = this;
+    getTopicDetail({ id }, (res) => { that.setState({ topic: res }); });
+  }
   save(event) {
     event.preventDefault();
     const { posttopic } = this.props;
     // eslint-disable-next-line
     const topic = this.state.topic;
     const that = this;
+    if ( !(topic.challengeId) ){
+      Alert.alert({title:"error",body:"please select a challengeId"});
+      return;
+    }
+    if ( !(topic.singles) || topic.singles.length==0 ){
+      Alert.alert({title:"error",body:"please add singles"});
+      return;
+    }
     if (topic.title && topic.challengeId && topic.singles && topic.singles.length > 0) {
       posttopic(topic, (res) => {
-        if (res) {
+        console.log(res.result.code);
+        if (res.result.code && parseInt(res.result.code) === 1) {
           that.setState({
             success: true,
           });
+        }else{
+          Alert.alert({title:"error",body:res.result.msg});
         }
       });
     }
@@ -120,33 +131,33 @@ class TopicEdit extends Component {
     const success = this.state.success;
     return (
       <div>
-            <Helmet title="TopicEdit" />
+            <Helmet title="ThemeEdit" />
             <WorkoutsListModal ref={(m)=>{this.openWorkoutCompont=m}} pushWorkouts={this.addTopicSingles.bind(this)} />
             <ChallengesListModal ref={(m)=>{this.challengeCompont=m}} pushChallenges={this.selectChallenge.bind(this)} />
             
             <div className="box">
-                {success && <div className="callout callout-success text-center">Your topic have been succesfully saved</div>}
+                {success && <div className="callout callout-success text-center">Your Theme have been succesfully saved</div>}
                 <div className="box-header">
-                    <h3 className="box-title">Edit Topic</h3>
+                    <h3 className="box-title">Edit Theme</h3>
                   </div>
                 <Form role="form" onSubmit={this.save.bind(this)}>
                     <div className="box-body">
                         <Row>
-                            <Col lg={3} className="m-t10">Topic ID:</Col>
+                            <Col lg={3} className="m-t10">Theme ID:</Col>
                             <Col lg={9} className="m-t10">{topic.id}</Col>
                           </Row>
                         
                         <Row className="m-t10">
                             <Col lg={3} className="m-t10">
-                                <label className="m-t5">Topic Title:</label>
+                                <label className="m-t5">Theme Title:</label>
                               </Col>
                             <Col lg={9} className="m-t10">
-                                <input type="text" className="form-control" style={{ maxWidth: '615px' }} required placeholder="" name="title" value={topic.title?topic.title:''} onChange={this.setTopic.bind(this)} />
+                                <input type="text" className="form-control" style={{ maxWidth: '615px' }} required placeholder="" maxLength="40" name="title" value={topic.title?topic.title:''} onChange={this.setTopic.bind(this)} />
                             </Col>
                         </Row>
                         <Row className='m-t10'>
                         <Col lg={3} md={3} className="m-t10">
-                        <label className="m-t5">challenge</label>
+                        <label className="m-t5">Challenge</label>
                         </Col>
                         <Col lg={9} md={9} className="m-t10">
                             <button type="button" className="btn btn-default" style={{maxWidth:'615px'}} onClick={this.openChallengeListModal.bind(this)}>{challenge?challenge.code+' : '+challenge.title:'Select a challenge'}</button>
@@ -155,7 +166,7 @@ class TopicEdit extends Component {
 
                         <Row>
                             <Col lg={3} className="m-t10">
-                                <label className="m-t5">Associated Topic Singles:</label>
+                                <label className="m-t5">Associated Theme Singles:</label>
                               </Col>
                             <Col lg={9} className="m-t5">
                                 {
