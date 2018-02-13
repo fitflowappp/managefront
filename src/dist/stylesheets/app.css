@@ -603,4 +603,12 @@ a:hover, a:visited {
 .width50{
   width:50%
 }
+.input_limit{
+  position:absolute;
+  bottom:0px;
+  width:10%;
+  right:0px;
+  font-size: 12px;
+}
+
 

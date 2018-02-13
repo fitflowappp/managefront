@@ -177,7 +177,8 @@ class ChallengesEdit extends Component {
                                     <label className="m-t5">Challenge Description:</label>
                                 </Col>
                                 <Col lg={9} className="m-t10">
-                                    <input type="text"  className="form-control" style={{maxWidth:'615px'}} required={true} placeholder="" name="description" value={challenge.description} onChange={this.setChallenge.bind(this)}/>
+                                    <input type="text"  className="form-control" style={{width:'90%'}} required={true} maxLength="200" placeholder="" name="description" value={challenge.description} onChange={this.setChallenge.bind(this)}/>
+                                    <label className="input_limit"> {(challenge.description?''+(200-challenge.description.length):'40')+'/200'} </label> 
                                 </Col>
                             </Row>
                             <Row>

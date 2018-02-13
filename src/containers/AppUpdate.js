@@ -205,7 +205,7 @@ class AppUpdate extends Component {
           </Col>
           <Col lg={10}  style={{height:'40px'}}>
           <select 
-            style={{width:'50%'}}
+            style={{width:'50%',background:this.state.updateComponentAble?'#fff':'#F0F0F0'}}
             name="build"
             value={updateSetting?(updateSetting.build?updateSetting.build:0):0}
             onChange={this.handleNormalChange.bind(this)}
@@ -214,7 +214,7 @@ class AppUpdate extends Component {
             {
               versions.map(function(version,index){
               
-              return  (<option key={'normal'+index} value={version.build} >{version.version}</option>)
+              return  (<option key={'normal'+index} style={{background:'#ff0000',color:'#00ff00'}} value={version.build} >{version.version}</option>)
             })
             }
             </select>
@@ -238,7 +238,7 @@ class AppUpdate extends Component {
           </Col>
           <Col lg={10}  style={{height:'40px'}}>
           <select 
-            style={{width:'50%'}}
+            style={{width:'50%',background:this.state.forceUpdateComponentAble?'#fff':'#F0F0F0'}}
             name="build"
             onChange={this.handleForceUpdateChange.bind(this)}
             value={forceUpdateSetting?(forceUpdateSetting.build?forceUpdateSetting.build:0):0}

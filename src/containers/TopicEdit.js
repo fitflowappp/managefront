@@ -73,6 +73,14 @@ class TopicEdit extends Component {
     if (!singles) {
       singlesList = [];
     }
+    let topicSinglesItem={};
+    for(var i=0;i<singlesList.length;i++){
+      topicSinglesItem=singlesList[i];
+      if(topicSinglesItem.singlesId === singles.id){
+        Alert.alert({title:'Warn',body:"This Single is already associated with this Topic." });
+        return;
+      }
+    }
     const topicSingles = {};
     topicSingles.singlesId = singles.id;
     topicSingles.singles = singles;
@@ -152,7 +160,9 @@ class TopicEdit extends Component {
                                 <label className="m-t5">Theme Title:</label>
                               </Col>
                             <Col lg={9} className="m-t10">
-                                <input type="text" className="form-control" style={{ maxWidth: '615px' }} required placeholder="" maxLength="40" name="title" value={topic.title?topic.title:''} onChange={this.setTopic.bind(this)} />
+                                
+                                  <input type="text" className="form-control" style={{width:'90%'}} required placeholder="" maxLength="40" name="title" value={topic.title?topic.title:''} onChange={this.setTopic.bind(this)} />
+                                  <label className="input_limit"> {(topic.title?''+(40-topic.title.length):'40')+'/40'} </label> 
                             </Col>
                         </Row>
                         <Row className='m-t10'>
